@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Strong Password Generator — Free &amp; Instant</title>
+<meta name="description" content="Generate a strong, random password instantly. Free, private, and works right in your browser — check any password's strength too. Nothing you type is ever sent anywhere.">
+<meta name="theme-color" content="#0E1017">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230E1017'/%3E%3Ccircle cx='12' cy='13' r='6' fill='none' stroke='%23D9AC5C' stroke-width='2'/%3E%3Crect x='11' y='4' width='2' height='5' rx='1' fill='%23D9AC5C'/%3E%3C/svg%3E">
+<meta property="og:title" content="Strong Password Generator — Free &amp; Instant">
+<meta property="og:description" content="Generate a strong, random password instantly, and check how strong any password is. Free and completely private.">
+<meta property="og:type" content="website">
+<style>
+:root{
+  --bg:#0E1017;
+  --surface:#171B26;
+  --surface-2:#1F2434;
+  --surface-3:#272D3F;
+  --border:#2C3346;
+  --border-2:#3A4257;
+  --text:#F4F1E9;
+  --text-dim:#A6ADC0;
+  --text-faint:#6D7590;
+  --brass:#D9AC5C;
+  --brass-bright:#F1CF88;
+  --violet:#8B7FD9;
+  --ink:#17120A;
+  --weak:#D05C4C;
+  --fair:#D89A4C;
+  --good:#A9BC5C;
+  --strong:#55B37E;
+  --sans:ui-sans-serif,"Avenir Next","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Consolas,"Roboto Mono",monospace;
+  --r-lg:22px;
+  --r:14px;
+  --shadow:0 30px 70px -40px rgba(0,0,0,.95);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{color-scheme:dark;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---------- ambient background ---------- */
+.aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.aurora span{position:absolute;border-radius:50%;filter:blur(110px)}
+.aurora .a{width:58vmax;height:58vmax;background:var(--brass);opacity:.13;top:-22vmax;left:-20vmax;animation:drift1 24s ease-in-out infinite alternate}
+.aurora .b{width:52vmax;height:52vmax;background:var(--violet);opacity:.11;bottom:-24vmax;right:-18vmax;animation:drift2 28s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(5vw,4vw) scale(1.08)}}
+@keyframes drift2{to{transform:translate(-4vw,-5vw) scale(1.06)}}
+
+/* ---------- layout ---------- */
+.wrap{
+  width:100%;
+  max-width:700px;
+  margin:0 auto;
+  padding:clamp(2rem,7vw,4.5rem) 1.25rem 2rem;
+}
+footer{
+  max-width:700px;
+  margin:0 auto;
+  padding:1.5rem 1.25rem 3.5rem;
+  color:var(--text-faint);
+  font-size:.82rem;
+  text-align:center;
+}
+
+/* ---------- reveal (transition based — never fights the pulse animation) ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1);
+  transition-delay:var(--d,0ms);
+}
+.reveal.is-in{opacity:1;transform:none}
+
+/* ---------- hero ---------- */
+.badges{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0;margin:0 0 1.15rem}
+.badge{
+  display:inline-flex;align-items:center;gap:.42rem;
+  padding:.32rem .72rem;border-radius:999px;
+  background:var(--surface);border:1px solid var(--border);
+  font-size:.76rem;font-weight:600;letter-spacing:.02em;
+  color:var(--text-dim);
+}
+.badge::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--strong);box-shadow:0 0 8px rgba(85,179,126,.9);
+}
+h1{
+  font-size:clamp(1.9rem,6.2vw,2.7rem);
+  line-height:1.1;
+  letter-spacing:-.022em;
+  font-weight:700;
+  margin:0 0 .65rem;
+}
+.lede{
+  color:var(--text-dim);
+  font-size:1.02rem;
+  margin:0 0 2rem;
+  max-width:46ch;
+}
+
+/* ---------- cards ---------- */
+.card{
+  background:linear-gradient(180deg,var(--surface),#131720);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:1.35rem;
+  box-shadow:var(--shadow);
+}
+.card-gen{position:relative;overflow:hidden}
+.card-gen::before{
+  content:"";position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(217,172,92,.85),transparent);
+}
+.card-check{margin-top:1.75rem}
+.card-tips{margin-top:1.75rem}
+
+/* ---------- password plate ---------- */
+.plate{
+  position:relative;
+  background:
+    radial-gradient(130% 160% at 50% 0%, rgba(217,172,92,.09), transparent 62%),
+    var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:1.7rem 1.15rem;
+  min-height:104px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.plate.pulse{animation:pulseGlow .65s ease-out}
+@keyframes pulseGlow{
+  0%{box-shadow:0 0 0 0 rgba(217,172,92,.42)}
+  100%{box-shadow:0 0 0 20px rgba(217,172,92,0)}
+}
+
+.password{
+  font-family:var(--mono);
+  font-size:clamp(1.1rem,4.6vw,1.45rem);
+  font-weight:500;
+  letter-spacing:.035em;
+  line-height:1.5;
+  margin:0;
+  word-break:break-all;
+  overflow-wrap:anywhere;
+  user-select:all;
+  -webkit-user-select:all;
+}
+.password.is-empty{
+  font-family:var(--sans);
+  font-size:.95rem;
+  font-weight:400;
+  letter-spacing:0;
+  color:var(--text-faint);
+  user-select:none;
+  -webkit-user-select:none;
+}
+
+/* meta line */
+.meta{
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  margin:.85rem 0 0;
+  min-height:1.25rem;
+  font-size:.8rem;
+  color:var(--text-faint);
+  font-variant-numeric:tabular-nums;
+}
+.meta .pip{width:7px;height:7px;border-radius:50%;background:var(--text-faint);flex:none}
+
+/* ---------- buttons ---------- */
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.65rem;
+  margin-top:1rem;
+}
+@media (max-width:420px){ .actions{grid-template-columns:1fr} }
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font:inherit;font-size:.92rem;font-weight:650;
+  min-height:50px;
+  padding:.8rem 1rem;
+  border:1px solid transparent;
+  border-radius:12px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,
+             transform .12s ease,box-shadow .18s ease,filter .18s ease;
+}
+.btn svg{width:18px;height:18px;flex:none}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn:focus-visible{outline:2px solid var(--brass-bright);outline-offset:2px}
+
+.btn-primary{
+  background:linear-gradient(180deg,var(--brass-bright),var(--brass));
+  color:var(--ink);
+  box-shadow:0 10px 26px -14px rgba(217,172,92,.9);
+}
+.btn-primary:hover:not(:disabled){filter:brightness(1.06)}
+.btn-primary.copied{
+  background:linear-gradient(180deg,#7BD8A2,var(--strong));
+  color:#04210F;
+  box-shadow:none;
+}
+
+.btn-ghost{
+  background:var(--surface-2);
+  border-color:var(--border-2);
+  color:var(--text);
+}
+.btn-ghost:hover:not(:disabled){
+  border-color:var(--brass);
+  color:var(--brass-bright);
+  background:#232939;
+}
+
+/* ---------- controls ---------- */
+.controls{
+  margin-top:1.5rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border);
+}
+.slider-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:.85rem;
+}
+.slider-head .label{font-size:.9rem;color:var(--text-dim);font-weight:550}
+.length-chip{
+  font-family:var(--mono);
+  font-size:.88rem;font-weight:700;
+  color:var(--brass-bright);
+  background:var(--surface-3);
+  border:1px solid var(--border-2);
+  border-radius:999px;
+  padding:.12rem .62rem;
+  min-width:2.6rem;
+  text-align:center;
+  font-variant-numeric:tabular-nums;
+}
+
+input[type="range"]{
+  -webkit-appearance:none;appearance:none;
+  display:block;width:100%;height:6px;
+  border-radius:999px;
+  outline:none;cursor:pointer;
+  margin:0;
+  background:linear-gradient(90deg,
+    var(--brass) 0%,
+    var(--brass) var(--fill,22%),
+    var(--surface-3) var(--fill,22%),
+    var(--surface-3) 100%);
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--brass);
+  border:3px solid var(--bg);
+  box-shadow:0 0 0 1px var(--brass),0 4px 12px -4px rgba(0,0,0,.9);
+  cursor:grab;
+  transition:transform .15s ease;
+}
+input[type="range"]:active::-webkit-slider-thumb{transform:scale(1.12);cursor:grabbing}
+input[type="range"]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--brass);
+  border:3px solid var(--bg);
+  box-shadow:0 0 0 1px var(--brass);
+  cursor:grab;
+}
+input[type="range"]::-moz-range-track{height:6px;border-radius:999px;background:transparent}
+input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-offset:6px}
+
+/* ---------- toggles ---------- */
+.toggles{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.85rem .95rem;
+  margin-top:1.4rem;
+}
+@media (max-width:360px){ .toggles{grid-template-columns:1fr} }
+
+.toggle{
+  position:relative;
+  display:flex;align-items:center;gap:.62rem;
+  font-size:.88rem;
+  color:var(--text-dim);
+  cursor:pointer;
+  user-select:none;
+  transition:color .18s ease;
+}
+.toggle input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.switch{
+  width:42px;height:24px;flex:none;
+  border-radius:999px;
+  background:var(--surface-3);
+  border:1px solid var(--border-2);
+  position:relative;
+  transition:background .18s ease,border-color .18s ease;
+}
+.switch::after{
+  content:"";position:absolute;top:2px;left:2px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--text-faint);
+  transition:transform .2s cubic-bezier(.3,.8,.4,1),background .18s ease;
+}
+.toggle input:checked + .switch{
+  background:rgba(217,172,92,.2);
+  border-color:var(--brass);
+}
+.toggle input:checked + .switch::after{
+  transform:translateX(18px);
+  background:var(--brass);
+}
+.toggle input:checked ~ .toggle-label{color:var(--text)}
+.toggle input:focus-visible + .switch{
+  outline:2px solid var(--brass-bright);
+  outline-offset:2px;
+}
+.toggle:active .switch{transform:scale(.96)}
+
+.toggle-secondary{
+  margin-top:1rem;
+  font-size:.83rem;
+}
+.toggle-secondary .switch{width:38px;height:22px}
+.toggle-secondary .switch::after{width:16px;height:16px}
+.toggle-secondary input:checked + .switch::after{transform:translateX(16px)}
+
+.hint{
+  display:flex;align-items:center;gap:.45rem;
+  margin:.9rem 0 0;
+  font-size:.83rem;
+  color:var(--fair);
+}
+.hint[hidden]{display:none}
+.hint::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--fair);flex:none;
+}
+
+/* ---------- checker ---------- */
+.section-title{
+  font-size:1.12rem;
+  font-weight:650;
+  letter-spacing:-.012em;
+  margin:0 0 .25rem;
+}
+.section-sub{
+  color:var(--text-faint);
+  font-size:.85rem;
+  margin:0 0 1.15rem;
+}
+
+.field{position:relative}
+.field input{
+  width:100%;
+  font-family:var(--mono);
+  font-size:1rem;
+  color:var(--text);
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:.95rem 3.2rem .95rem 1rem;
+  outline:none;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.field input::placeholder{font-family:var(--sans);color:var(--text-faint)}
+.field input:focus{
+  border-color:var(--brass);
+  box-shadow:0 0 0 4px rgba(217,172,92,.13);
+}
+.field .eye{
+  position:absolute;right:.55rem;top:50%;transform:translateY(-50%);
+  width:38px;height:38px;
+  display:grid;place-items:center;
+  background:none;border:0;border-radius:10px;
+  color:var(--text-faint);cursor:pointer;
+  transition:color .18s ease,background .18s ease;
+}
+.field .eye:hover{color:var(--brass-bright);background:var(--surface-2)}
+.field .eye:focus-visible{outline:2px solid var(--brass-bright);outline-offset:2px}
+.field .eye svg{width:19px;height:19px}
+
+.meter{display:flex;gap:5px;margin:1.1rem 0 .6rem}
+.meter .seg{
+  flex:1;height:6px;border-radius:999px;
+  background:var(--surface-3);
+  transition:background .3s ease,box-shadow .3s ease;
+}
+.meter .seg.on{box-shadow:0 0 12px -3px currentColor}
+
+.strength-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:1rem;
+  min-height:1.4rem;
+}
+.strength-name{font-weight:650;font-size:.95rem}
+.crack{
+  color:var(--text-dim);
+  font-size:.84rem;
+  margin:.2rem 0 0;
+  font-variant-numeric:tabular-nums;
+}
+
+.feedback{
+  list-style:none;
+  padding:0;
+  margin:1rem 0 0;
+  display:grid;
+  gap:.5rem;
+}
+.feedback[hidden]{display:none}
+.feedback li{
+  position:relative;
+  padding-left:1.15rem;
+  color:var(--text-dim);
+  font-size:.86rem;
+}
+.feedback li::before{
+  content:"";position:absolute;left:0;top:.62em;
+  width:5px;height:5px;border-radius:50%;
+  background:var(--brass);
+}
+
+/* ---------- tips ---------- */
+.tips{list-style:none;padding:0;margin:0;counter-reset:tip;display:grid;gap:.7rem}
+.tips li{
+  position:relative;
+  counter-increment:tip;
+  padding:.95rem 1rem .95rem 2.9rem;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  color:var(--text-dim);
+  font-size:.9rem;
+  line-height:1.55;
+}
+.tips li::before{
+  content:counter(tip);
+  position:absolute;left:.95rem;top:1rem;
+  width:1.35rem;height:1.35rem;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:rgba(217,172,92,.13);
+  border:1px solid rgba(217,172,92,.32);
+  color:var(--brass);
+  font-size:.68rem;font-weight:700;
+  font-family:var(--mono);
+}
+.tips strong{color:var(--text);font-weight:650}
+
+/* ---------- misc ---------- */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  .reveal{opacity:1 !important;transform:none !important}
+}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span class="a"></span><span class="b"></span></div>
+
+<main class="wrap">
+
+  <header class="hero">
+    <ul class="badges reveal" style="--d:0ms">
+      <li class="badge">Free</li>
+      <li class="badge">Private</li>
+      <li class="badge">No sign-up</li>
+    </ul>
+    <h1 class="reveal" style="--d:60ms">Strong Password Generator</h1>
+    <p class="lede reveal" style="--d:110ms">Create a random, hard&#8209;to&#8209;crack password in one tap — or check how strong your current one really is. Everything happens right here in your browser.</p>
+  </header>
+
+  <section class="card card-gen reveal" style="--d:170ms" aria-labelledby="genHeading">
+    <h2 id="genHeading" class="sr-only">Generate a password</h2>
+
+    <div class="plate" id="plate">
+      <p class="password is-empty" id="passwordOutput" aria-live="polite">Your new password will appear here</p>
+    </div>
+
+    <p class="meta" id="metaLine"></p>
+
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="copyBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/></svg>
+        <span id="copyLabel">Copy</span>
+      </button>
+      <button type="button" class="btn btn-ghost" id="regenBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg>
+        <span>New password</span>
+      </button>
+    </div>
+
+    <div class="controls">
+      <div class="slider-head">
+        <label class="label" for="lengthRange">Length</label>
+        <span class="length-chip" id="lengthValue">20</span>
+      </div>
+      <input type="range" id="lengthRange" min="8" max="64" value="20" step="1" aria-label="Password length">
+
+      <div class="toggles">
+        <label class="toggle">
+          <input type="checkbox" id="optUpper" checked>
+          <span class="switch"></span>
+          <span class="toggle-label">Uppercase</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="optLower" checked>
+          <span class="switch"></span>
+          <span class="toggle-label">Lowercase</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="optDigits" checked>
+          <span class="switch"></span>
+          <span class="toggle-label">Numbers</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="optSymbols" checked>
+          <span class="switch"></span>
+          <span class="toggle-label">Symbols</span>
+        </label>
+      </div>
+
+      <label class="toggle toggle-secondary">
+        <input type="checkbox" id="optAmbiguous">
+        <span class="switch"></span>
+        <span class="toggle-label">Avoid similar characters (0, O, 1, l, I)</span>
+      </label>
+
+      <p class="hint" id="poolWarning" role="alert" hidden>Turn on at least one character type above.</p>
+    </div>
+  </section>
+
+  <section class="card card-check reveal" aria-labelledby="checkHeading">
+    <h2 id="checkHeading" class="section-title">Check your password's strength</h2>
+    <p class="section-sub">Typed here, analysed here. Nothing leaves your device.</p>
+
+    <div class="field">
+      <input type="password" id="pwInput" placeholder="Type or paste a password" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Password to check">
+      <button type="button" class="eye" id="toggleShow" aria-label="Show password"></button>
+    </div>
+
+    <div class="meter" aria-hidden="true">
+      <span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span>
+    </div>
+    <div class="strength-head">
+      <span class="strength-name" id="strengthLabel" aria-live="polite">&nbsp;</span>
+    </div>
+    <p class="crack" id="crackTime"></p>
+
+    <ul class="feedback" id="feedbackList" hidden></ul>
+  </section>
+
+  <section class="card card-tips reveal" aria-labelledby="tipsHeading">
+    <h2 id="tipsHeading" class="section-title">What actually makes a password strong</h2>
+    <p class="section-sub">Four rules that matter more than anything else.</p>
+    <ul class="tips">
+      <li><strong>Length beats complexity.</strong> A 16-character password is dramatically harder to crack than an 8-character one, even with fewer symbol types.</li>
+      <li><strong>Never reuse a password.</strong> If one site leaks it, every account using it is exposed too.</li>
+      <li><strong>Random words work as well as random characters.</strong> Four unrelated words strung together is long, memorable and just as strong.</li>
+      <li><strong>Save it somewhere real.</strong> A password manager remembers your passwords so you never have to reuse or simplify one again.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <p>Everything above runs in your browser. Nothing you generate or type is ever sent anywhere.</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ============================================================
+     Secure randomness
+     ============================================================ */
+  var hasCrypto = typeof window.crypto !== "undefined" &&
+                  typeof window.crypto.getRandomValues === "function";
+  var randBuf = hasCrypto ? new Uint32Array(1) : null;
+
+  function randomInt(max) {
+    if (max <= 1) return 0;
+    if (!hasCrypto) return Math.floor(Math.random() * max);
+    // Rejection sampling — removes modulo bias completely.
+    var limit = Math.floor(4294967296 / max) * max;
+    var v;
+    do { crypto.getRandomValues(randBuf); v = randBuf[0]; } while (v >= limit);
+    return v % max;
+  }
+
+  /* ============================================================
+     Shared strength model
+     ============================================================ */
+  var LEVELS = [
+    { name: "Weak",        color: "#D05C4C", segs: 1 },
+    { name: "Fair",        color: "#D89A4C", segs: 2 },
+    { name: "Strong",      color: "#A9BC5C", segs: 3 },
+    { name: "Very strong", color: "#55B37E", segs: 4 }
+  ];
+
+  function levelFromBits(bits) {
+    if (bits < 35) return 0;
+    if (bits < 60) return 1;
+    if (bits < 80) return 2;
+    return 3;
+  }
+
+  /* ============================================================
+     GENERATOR
+     ============================================================ */
+  var CHARSETS = {
+    upper:   "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    lower:   "abcdefghijklmnopqrstuvwxyz",
+    digits:  "0123456789",
+    symbols: "!@#$%^&*()-_=+[]{};:,.?"
+  };
+  var AMBIGUOUS = "0O1lI|";
+
+  var lengthRange  = $("lengthRange");
+  var lengthValue  = $("lengthValue");
+  var optUpper     = $("optUpper");
+  var optLower     = $("optLower");
+  var optDigits    = $("optDigits");
+  var optSymbols   = $("optSymbols");
+  var optAmbiguous = $("optAmbiguous");
+  var passwordEl   = $("passwordOutput");
+  var plate        = $("plate");
+  var metaLine     = $("metaLine");
+  var copyBtn      = $("copyBtn");
+  var copyLabel    = $("copyLabel");
+  var regenBtn     = $("regenBtn");
+  var poolWarning  = $("poolWarning");
+
+  var state = { password: "" };
+
+  function activeCategories() {
+    var cats = [];
+    if (optUpper.checked)   cats.push(CHARSETS.upper);
+    if (optLower.checked)   cats.push(CHARSETS.lower);
+    if (optDigits.checked)  cats.push(CHARSETS.digits);
+    if (optSymbols.checked) cats.push(CHARSETS.symbols);
+
+    if (optAmbiguous.checked) {
+      cats = cats.map(function (set) {
+        return set.split("").filter(function (c) {
+          return AMBIGUOUS.indexOf(c) === -1;
+        }).join("");
+      }).filter(function (s) { return s.length > 0; });
+    }
+    return cats;
+  }
+
+  function buildPassword(length, cats) {
+    var pool = cats.join("");
+    var out = cats.map(function (cat) {
+      return cat.charAt(randomInt(cat.length));
+    });
+
+    while (out.length < length) {
+      out.push(pool.charAt(randomInt(pool.length)));
+    }
+    out = out.slice(0, length);
+
+    // Fisher–Yates shuffle so the guaranteed characters aren't stuck at the front.
+    for (var i = out.length - 1; i > 0; i--) {
+      var j = randomInt(i + 1);
+      var tmp = out[i]; out[i] = out[j]; out[j] = tmp;
+    }
+    return out.join("");
+  }
+
+  /* --- scramble-in animation (never allowed to leave the box empty) --- */
+  var rafId = null;
+
+  function animatePassword(finalText) {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+
+    if (reduceMotion || typeof requestAnimationFrame !== "function") {
+      passwordEl.textContent = finalText;
+      return;
+    }
+
+    var glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+    var n = finalText.length;
+    var DURATION = 300;
+    var t0 = performance.now();
+    var prevLive = passwordEl.getAttribute("aria-live");
+
+    // Stop screen readers announcing every scrambled frame.
+    passwordEl.setAttribute("aria-live", "off");
+
+    function step(now) {
+      var t = Math.min((now - t0) / DURATION, 1);
+      var out = "";
+      for (var i = 0; i < n; i++) {
+        out += (t * n >= i + 1) ? finalText.charAt(i) : glyphs.charAt(randomInt(glyphs.length));
+      }
+      passwordEl.textContent = out;
+
+      if (t < 1) {
+        rafId = requestAnimationFrame(step);
+      } else {
+        passwordEl.textContent = finalText;   // final, exact value
+        passwordEl.setAttribute("aria-live", prevLive || "polite");
+        rafId = null;
+      }
+    }
+    rafId = requestAnimationFrame(step);
+  }
+
+  function pulsePlate() {
+    if (reduceMotion) return;
+    plate.classList.remove("pulse");
+    void plate.offsetWidth;   // force reflow to restart the animation
+    plate.classList.add("pulse");
+  }
+
+  function updateSliderFill() {
+    var min = Number(lengthRange.min);
+    var max = Number(lengthRange.max);
+    var val = Number(lengthRange.value);
+    var pct = max === min ? 0 : ((val - min) / (max - min)) * 100;
+    lengthRange.style.setProperty("--fill", pct + "%");
+  }
+
+  function updateMeta(len, cats) {
+    var pool = cats.join("").length;
+    var bits = Math.round(len * Math.log2(Math.max(pool, 2)));
+    var level = levelFromBits(bits);
+
+    metaLine.innerHTML =
+      '<span class="pip" style="background:' + LEVELS[level].color + '"></span>' +
+      '<span>' + len + ' characters &middot; ~' + bits + ' bits of entropy</span>';
+  }
+
+  function refreshPassword() {
+    var len = Number(lengthRange.value);
+    lengthValue.textContent = String(len);
+    updateSliderFill();
+
+    var cats = activeCategories();
+
+    if (!cats.length) {
+      state.password = "";
+      passwordEl.textContent = "Select at least one character type";
+      passwordEl.classList.add("is-empty");
+      metaLine.innerHTML = "";
+      poolWarning.hidden = false;
+      copyBtn.disabled = true;
+      return;
+    }
+
+    poolWarning.hidden = true;
+    copyBtn.disabled = false;
+
+    var pw = buildPassword(len, cats);
+    state.password = pw;
+
+    passwordEl.classList.remove("is-empty");
+    animatePassword(pw);
+    pulsePlate();
+    updateMeta(len, cats);
+  }
+
+  /* --- copy --- */
+  var copyTimer = null;
+
+  function showCopied() {
+    copyLabel.textContent = "Copied!";
+    copyBtn.classList.add("copied");
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(function () {
+      copyLabel.textContent = "Copy";
+      copyBtn.classList.remove("copied");
+    }, 1600);
+  }
+
+  function copyPassword() {
+    if (!state.password) return;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(state.password).then(showCopied, legacyCopy);
+    } else {
+      legacyCopy();
+    }
+  }
+
+  function legacyCopy() {
+    var ta = document.createElement("textarea");
+    ta.value = state.password;
+    ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;";
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+
+    if (ok) {
+      showCopied();
+    } else {
+      copyLabel.textContent = "Press Ctrl+C";
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function () { copyLabel.textContent = "Copy"; }, 1800);
+    }
+  }
+
+  /* --- wiring --- */
+  [lengthRange, optUpper, optLower, optDigits, optSymbols, optAmbiguous]
+    .forEach(function (el) { el.addEventListener("input", refreshPassword); });
+
+  regenBtn.addEventListener("click", refreshPassword);
+  copyBtn.addEventListener("click", copyPassword);
+
+  refreshPassword();
+
+  /* ============================================================
+     STRENGTH CHECKER
+     ============================================================ */
+  var COMMON_PASSWORDS = [
+    "password","123456","123456789","12345678","12345","1234567","qwerty","abc123",
+    "password1","111111","123123","admin","letmein","welcome","monkey","login",
+    "princess","qwerty123","passw0rd","starwars","dragon","master","hello","freedom",
+    "whatever","qazwsx","trustno1","superman","iloveyou","sunshine","shadow","michael",
+    "football","baseball","jennifer","hunter","ranger","buster","soccer","hockey",
+    "killer","george","computer","jordan","harley","robert","matthew","jessica",
+    "cheese","tigger","amanda","access","yankees","dallas","austin","thunder",
+    "taylor","matrix","mustang","batman","andrew","joshua","biteme","1234567890",
+    "000000","121212","zaq1zaq1","q1w2e3r4","asdfghjkl","1q2w3e4r","changeme",
+    "default","guest","test123","secret","letmein123","iloveyou1"
+  ];
+
+  var LEET_MAP = { "@":"a","4":"a","3":"e","1":"i","!":"i","0":"o","$":"s","5":"s","7":"t" };
+
+  function normalizeLeet(s) {
+    return s.toLowerCase().split("").map(function (ch) {
+      return LEET_MAP[ch] || ch;
+    }).join("");
+  }
+
+  function isCommonPattern(pw) {
+    var lower = pw.toLowerCase();
+    var leet = normalizeLeet(pw);
+    for (var i = 0; i < COMMON_PASSWORDS.length; i++) {
+      var c = COMMON_PASSWORDS[i];
+      if (lower.indexOf(c) !== -1 || leet.indexOf(c) !== -1) return true;
+    }
+    return false;
+  }
+
+  function detectPoolSize(pw) {
+    var pool = 0;
+    if (/[a-z]/.test(pw)) pool += 26;
+    if (/[A-Z]/.test(pw)) pool += 26;
+    if (/[0-9]/.test(pw)) pool += 10;
+    if (/[^a-zA-Z0-9]/.test(pw)) pool += 33;
+    return pool;
+  }
+
+  function repeatPenaltyChars(pw) {
+    var matches = pw.match(/(.)\1{2,}/g);
+    if (!matches) return 0;
+    return matches.reduce(function (sum, m) { return sum + m.length; }, 0);
+  }
+
+  function sequentialPenaltyChars(pw) {
+    var penalized = 0, asc = 1, desc = 1;
+    for (var i = 1; i < pw.length; i++) {
+      var diff = pw.charCodeAt(i) - pw.charCodeAt(i - 1);
+      if (diff === 1)       { asc++;  desc = 1; }
+      else if (diff === -1) { desc++; asc = 1;  }
+      else                  { asc = 1; desc = 1; }
+      if (asc >= 3 || desc >= 3) penalized++;
+    }
+    return penalized;
+  }
+
+  function estimateEntropyBits(pw) {
+    if (!pw) return 0;
+    var pool = detectPoolSize(pw);
+    var perCharBits = Math.log2(Math.max(pool, 2));
+    var bits = pw.length * perCharBits;
+
+    var penalized = repeatPenaltyChars(pw) + sequentialPenaltyChars(pw);
+    bits -= penalized * perCharBits;
+
+    if (isCommonPattern(pw)) bits = Math.min(bits, 10);
+    return Math.max(bits, 0);
+  }
+
+  function crackSecondsFromBits(bits) {
+    // 10 billion guesses/second, average case = half the keyspace.
+    return Math.pow(2, bits) / 1e10 / 2;
+  }
+
+  function plural(n, word) {
+    var r = Math.round(n);
+    return r + " " + word + (r === 1 ? "" : "s");
+  }
+
+  function formatCrackTime(seconds) {
+    if (seconds < 1) return "instantly";
+    if (seconds < 60) return "about " + plural(seconds, "second");
+
+    var minutes = seconds / 60;
+    if (minutes < 60) return "about " + plural(minutes, "minute");
+
+    var hours = minutes / 60;
+    if (hours < 24) return "about " + plural(hours, "hour");
+
+    var days = hours / 24;
+    if (days < 31) return "about " + plural(days, "day");
+
+    var months = days / 30.44;
+    if (months < 12) return "about " + plural(months, "month");
+
+    var years = days / 365.25;
+    if (years < 1000) return "about " + plural(years, "year");
+    if (years < 1e6)  return "about " + Math.round(years / 1e3) + " thousand years";
+    if (years < 1e9)  return "about " + Math.round(years / 1e6) + " million years";
+    if (years < 1e12) return "about " + Math.round(years / 1e9) + " billion years";
+    return "longer than the universe has existed";
+  }
+
+  function getFeedback(pw) {
+    var tips = [];
+    if (pw.length < 12) tips.push("Use at least 12 characters — length matters more than anything else.");
+    if (!/[A-Z]/.test(pw)) tips.push("Add an uppercase letter.");
+    if (!/[a-z]/.test(pw)) tips.push("Add a lowercase letter.");
+    if (!/[0-9]/.test(pw)) tips.push("Add a number.");
+    if (!/[^a-zA-Z0-9]/.test(pw)) tips.push("Add a symbol.");
+    if (repeatPenaltyChars(pw) > 0) tips.push("Avoid repeating the same character.");
+    if (sequentialPenaltyChars(pw) > 0) tips.push('Avoid sequences like "abc" or "123".');
+    if (isCommonPattern(pw)) tips.push("This resembles a commonly leaked password — avoid it entirely.");
+    return tips.slice(0, 3);
+  }
+
+  var pwInput      = $("pwInput");
+  var toggleShow   = $("toggleShow");
+  var meterSegs    = document.querySelectorAll(".meter .seg");
+  var strengthLabel = $("strengthLabel");
+  var crackTimeEl  = $("crackTime");
+  var feedbackList = $("feedbackList");
+
+  var EYE_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+
+  var EYE_OFF_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a18.5 18.5 0 0 1 4.22-5.06"/>' +
+    '<path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 7 11 7a18.5 18.5 0 0 1-2.16 3.19"/>' +
+    '<path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
+  toggleShow.innerHTML = EYE_ICON;
+
+  toggleShow.addEventListener("click", function () {
+    var showing = pwInput.type === "text";
+    pwInput.type = showing ? "password" : "text";
+    toggleShow.innerHTML = showing ? EYE_ICON : EYE_OFF_ICON;
+    toggleShow.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+    pwInput.focus({ preventScroll: true });
+  });
+
+  function resetMeter() {
+    for (var i = 0; i < meterSegs.length; i++) {
+      meterSegs[i].style.background = "";
+      meterSegs[i].classList.remove("on");
+    }
+  }
+
+  function updateChecker() {
+    var pw = pwInput.value;
+
+    if (!pw) {
+      resetMeter();
+      strengthLabel.innerHTML = "&nbsp;";
+      crackTimeEl.textContent = "";
+      feedbackList.hidden = true;
+      feedbackList.innerHTML = "";
+      return;
+    }
+
+    var bits   = estimateEntropyBits(pw);
+    var level  = levelFromBits(bits);
+    var info   = LEVELS[level];
+    var seconds = crackSecondsFromBits(bits);
+
+    for (var i = 0; i < meterSegs.length; i++) {
+      if (i <= level) {
+        meterSegs[i].style.background = info.color;
+        meterSegs[i].style.color = info.color;   // drives the glow
+        meterSegs[i].classList.add("on");
+      } else {
+        meterSegs[i].style.background = "";
+        meterSegs[i].classList.remove("on");
+      }
+    }
+
+    strengthLabel.textContent = info.name;
+    strengthLabel.style.color = info.color;
+    crackTimeEl.textContent =
+      "Estimated time to crack: " + formatCrackTime(seconds) + " (fast offline attack)";
+
+    var tips = getFeedback(pw);
+    if (tips.length) {
+      feedbackList.innerHTML = tips.map(function (t) {
+        return "<li>" + t + "</li>";
+      }).join("");
+      feedbackList.hidden = false;
+    } else {
+      feedbackList.hidden = true;
+      feedbackList.innerHTML = "";
+    }
+  }
+
+  pwInput.addEventListener("input", updateChecker);
+
+  /* ============================================================
+     Scroll reveals
+     ============================================================ */
+  var revealEls = document.querySelectorAll(".reveal");
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    for (var r = 0; r < revealEls.length; r++) revealEls[r].classList.add("is-in");
+  } else {
+    // Wait two frames so the initial hidden state is painted before observing —
+    // guarantees the CSS transition actually plays.
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-in");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -4% 0px" });
+
+        for (var i = 0; i < revealEls.length; i++) io.observe(revealEls[i]);
+      });
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
