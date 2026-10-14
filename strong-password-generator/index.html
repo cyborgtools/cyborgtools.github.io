@@ -6,13 +6,27 @@
   <meta name="google-site-verification" content="PYsiST2cwlumIAmNFBEBdnQ1lnIShqeKvV5Ni33cZfo" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Strong Password Generator — Free &amp; Instant</title>
-<meta name="description" content="Generate a strong, random password instantly. Free, private, and works right in your browser — check any password's strength too. Nothing you type is ever sent anywhere.">
+<title>Strong Password Generator — Free, Private &amp; Instant | Passphrases, PINs, Bulk</title>
+<meta name="description" content="Generate strong random passwords, memorable passphrases, and PINs instantly. Bulk generate up to 100, check password strength, and see if a password has been leaked — all private, in your browser.">
 <meta name="theme-color" content="#0E1017">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://example.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230E1017'/%3E%3Ccircle cx='12' cy='13' r='6' fill='none' stroke='%23D9AC5C' stroke-width='2'/%3E%3Crect x='11' y='4' width='2' height='5' rx='1' fill='%23D9AC5C'/%3E%3C/svg%3E">
-<meta property="og:title" content="Strong Password Generator — Free &amp; Instant">
-<meta property="og:description" content="Generate a strong, random password instantly, and check how strong any password is. Free and completely private.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Strong Password Generator — Free, Private &amp; Instant">
+<meta property="og:description" content="Generate strong random passwords, memorable passphrases, and PINs instantly. Bulk generate, check strength, and check for leaks — all in your browser.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com/">
+<!-- Replace with a real 1200x630 image -->
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Strong Password Generator — Free, Private &amp; Instant">
+<meta name="twitter:description" content="Generate strong passwords, passphrases, and PINs. Bulk generate. Check for leaks. 100% client-side.">
+<meta name="twitter:image" content="https://example.com/og-image.png">
+
 <style>
 :root{
   --bg:#0E1017;
@@ -40,7 +54,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{color-scheme:dark;-webkit-text-size-adjust:100%}
+html{color-scheme:dark;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
   margin:0;
   min-height:100vh;
@@ -64,20 +78,22 @@ body{
 /* ---------- layout ---------- */
 .wrap{
   width:100%;
-  max-width:700px;
+  max-width:760px;
   margin:0 auto;
   padding:clamp(2rem,7vw,4.5rem) 1.25rem 2rem;
 }
 footer{
-  max-width:700px;
+  max-width:760px;
   margin:0 auto;
   padding:1.5rem 1.25rem 3.5rem;
   color:var(--text-faint);
   font-size:.82rem;
   text-align:center;
 }
+footer a{color:var(--brass);text-decoration:none}
+footer a:hover{text-decoration:underline}
 
-/* ---------- reveal (transition based — never fights the pulse animation) ---------- */
+/* ---------- reveal ---------- */
 .reveal{
   opacity:0;
   transform:translateY(18px);
@@ -110,7 +126,7 @@ h1{
   color:var(--text-dim);
   font-size:1.02rem;
   margin:0 0 2rem;
-  max-width:46ch;
+  max-width:52ch;
 }
 
 /* ---------- cards ---------- */
@@ -121,13 +137,83 @@ h1{
   padding:1.35rem;
   box-shadow:var(--shadow);
 }
+.card + .card,
+.card + .ad-slot,
+.ad-slot + .card{margin-top:1.75rem}
 .card-gen{position:relative;overflow:hidden}
 .card-gen::before{
   content:"";position:absolute;top:0;left:10%;right:10%;height:1px;
   background:linear-gradient(90deg,transparent,rgba(217,172,92,.85),transparent);
 }
-.card-check{margin-top:1.75rem}
-.card-tips{margin-top:1.75rem}
+
+/* ---------- section headings ---------- */
+.section-title{
+  font-size:1.12rem;
+  font-weight:650;
+  letter-spacing:-.012em;
+  margin:0 0 .25rem;
+}
+.section-sub{
+  color:var(--text-faint);
+  font-size:.85rem;
+  margin:0 0 1.15rem;
+}
+
+/* ---------- mode tabs ---------- */
+.mode-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.4rem;
+  padding:.32rem;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:12px;
+  margin-bottom:1.35rem;
+}
+.mode-tab{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--text-dim);
+  font:inherit;
+  font-size:.86rem;
+  font-weight:600;
+  padding:.6rem .5rem;
+  border-radius:9px;
+  cursor:pointer;
+  transition:background .18s ease,color .18s ease;
+  white-space:nowrap;
+}
+.mode-tab:hover{color:var(--text)}
+.mode-tab[aria-selected="true"]{
+  background:var(--surface-3);
+  color:var(--brass-bright);
+  box-shadow:inset 0 0 0 1px var(--border-2);
+}
+.mode-tab:focus-visible{outline:2px solid var(--brass-bright);outline-offset:2px}
+
+/* ---------- presets ---------- */
+.presets{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.4rem;
+  margin-bottom:1.35rem;
+}
+.preset-chip{
+  appearance:none;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  color:var(--text-dim);
+  font:inherit;
+  font-size:.78rem;
+  font-weight:600;
+  padding:.38rem .78rem;
+  border-radius:999px;
+  cursor:pointer;
+  transition:border-color .18s ease,color .18s ease,background .18s ease;
+}
+.preset-chip:hover{border-color:var(--brass);color:var(--brass-bright);background:#232939}
+.preset-chip:focus-visible{outline:2px solid var(--brass-bright);outline-offset:2px}
 
 /* ---------- password plate ---------- */
 .plate{
@@ -183,6 +269,25 @@ h1{
 }
 .meta .pip{width:7px;height:7px;border-radius:50%;background:var(--text-faint);flex:none}
 
+.check-link{
+  display:block;
+  margin:.55rem auto 0;
+  background:none;
+  border:0;
+  color:var(--text-faint);
+  font:inherit;
+  font-size:.78rem;
+  cursor:pointer;
+  padding:.2rem .4rem;
+  border-radius:6px;
+  transition:color .18s ease;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-color:var(--border-2);
+}
+.check-link:hover{color:var(--brass-bright);text-decoration-color:var(--brass)}
+.check-link:focus-visible{outline:2px solid var(--brass-bright);outline-offset:2px}
+
 /* ---------- buttons ---------- */
 .actions{
   display:grid;
@@ -208,6 +313,8 @@ h1{
 .btn:active{transform:translateY(1px) scale(.99)}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .btn:focus-visible{outline:2px solid var(--brass-bright);outline-offset:2px}
+.btn-sm{min-height:38px;font-size:.82rem;padding:.45rem .85rem;border-radius:10px}
+.btn-sm svg{width:15px;height:15px}
 
 .btn-primary{
   background:linear-gradient(180deg,var(--brass-bright),var(--brass));
@@ -238,6 +345,10 @@ h1{
   padding-top:1.5rem;
   border-top:1px solid var(--border);
 }
+.controls[hidden]{display:none}
+.control-group{margin-bottom:1.35rem}
+.control-group:last-child{margin-bottom:0}
+
 .slider-head{
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:.85rem;
@@ -293,7 +404,6 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:.85rem .95rem;
-  margin-top:1.4rem;
 }
 @media (max-width:360px){ .toggles{grid-template-columns:1fr} }
 
@@ -344,6 +454,36 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
 .toggle-secondary .switch::after{width:16px;height:16px}
 .toggle-secondary input:checked + .switch::after{transform:translateX(16px)}
 
+/* select */
+.select-wrap{position:relative}
+.select-wrap::after{
+  content:"";
+  position:absolute;
+  right:.95rem;
+  top:50%;
+  width:8px;height:8px;
+  border-right:2px solid var(--text-faint);
+  border-bottom:2px solid var(--text-faint);
+  transform:translateY(-70%) rotate(45deg);
+  pointer-events:none;
+}
+select{
+  appearance:none;
+  -webkit-appearance:none;
+  width:100%;
+  font:inherit;
+  font-size:.9rem;
+  color:var(--text);
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:.75rem 2.4rem .75rem .95rem;
+  cursor:pointer;
+  outline:none;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+select:focus{border-color:var(--brass);box-shadow:0 0 0 4px rgba(217,172,92,.13)}
+
 .hint{
   display:flex;align-items:center;gap:.45rem;
   margin:.9rem 0 0;
@@ -356,19 +496,61 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   background:var(--fair);flex:none;
 }
 
-/* ---------- checker ---------- */
-.section-title{
-  font-size:1.12rem;
-  font-weight:650;
-  letter-spacing:-.012em;
-  margin:0 0 .25rem;
+/* ---------- bulk ---------- */
+.bulk-list{
+  list-style:none;
+  margin:0 0 1rem;
+  padding:0;
+  max-height:340px;
+  overflow-y:auto;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  background:var(--bg);
 }
-.section-sub{
-  color:var(--text-faint);
+.bulk-list:empty{display:none}
+.bulk-item{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  padding:.62rem .8rem;
+  border-bottom:1px solid var(--border);
+  font-family:var(--mono);
   font-size:.85rem;
-  margin:0 0 1.15rem;
+  word-break:break-all;
+}
+.bulk-item:last-child{border-bottom:0}
+.bulk-item .idx{
+  flex:none;
+  font-family:var(--sans);
+  font-size:.7rem;
+  color:var(--text-faint);
+  min-width:1.6rem;
+}
+.bulk-item .pw{flex:1;user-select:all;-webkit-user-select:all;overflow-wrap:anywhere}
+.bulk-item .icon-btn{flex:none}
+
+.icon-btn{
+  appearance:none;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  color:var(--text-faint);
+  width:32px;height:32px;
+  border-radius:8px;
+  display:grid;place-items:center;
+  cursor:pointer;
+  transition:color .18s ease,border-color .18s ease,background .18s ease;
+}
+.icon-btn:hover{color:var(--brass-bright);border-color:var(--brass);background:#232939}
+.icon-btn:focus-visible{outline:2px solid var(--brass-bright);outline-offset:2px}
+.icon-btn svg{width:15px;height:15px}
+
+.bulk-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
 }
 
+/* ---------- checker ---------- */
 .field{position:relative}
 .field input{
   width:100%;
@@ -440,6 +622,97 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   background:var(--brass);
 }
 
+.checker-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin-top:1rem;
+}
+
+.breach-result{
+  margin-top:1rem;
+  padding:.85rem 1rem;
+  border-radius:12px;
+  font-size:.86rem;
+  line-height:1.5;
+  display:flex;
+  gap:.6rem;
+  align-items:flex-start;
+  border:1px solid var(--border);
+  background:var(--bg);
+}
+.breach-result[hidden]{display:none}
+.breach-result .dot{
+  flex:none;
+  width:9px;height:9px;
+  border-radius:50%;
+  margin-top:.45rem;
+}
+.breach-result.is-good{border-color:rgba(85,179,126,.4);background:rgba(85,179,126,.07)}
+.breach-result.is-good .dot{background:var(--strong);box-shadow:0 0 10px rgba(85,179,126,.8)}
+.breach-result.is-bad{border-color:rgba(208,92,76,.45);background:rgba(208,92,76,.08)}
+.breach-result.is-bad .dot{background:var(--weak);box-shadow:0 0 10px rgba(208,92,76,.8)}
+.breach-result.is-warn{border-color:rgba(216,154,76,.4);background:rgba(216,154,76,.07)}
+.breach-result.is-warn .dot{background:var(--fair)}
+.breach-result strong{color:var(--text)}
+.breach-result code{font-family:var(--mono);font-size:.82em;color:var(--brass-bright)}
+
+.spinner{
+  display:inline-block;
+  width:13px;height:13px;
+  border:2px solid rgba(217,172,92,.25);
+  border-top-color:var(--brass);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+  vertical-align:-2px;
+  margin-right:.4rem;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- history ---------- */
+.history-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:.5rem;
+}
+.history-list:empty{display:none}
+.history-item{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  padding:.6rem .8rem;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--bg);
+  font-size:.84rem;
+}
+.history-item .when{
+  flex:none;
+  font-size:.72rem;
+  color:var(--text-faint);
+  min-width:5.2rem;
+}
+.history-item .pw{
+  flex:1;
+  font-family:var(--mono);
+  font-size:.84rem;
+  color:var(--text-dim);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  cursor:pointer;
+  user-select:all;
+  -webkit-user-select:all;
+}
+.history-item .pw:hover{color:var(--brass-bright)}
+.history-empty{
+  color:var(--text-faint);
+  font-size:.85rem;
+  margin:.5rem 0 0;
+}
+
 /* ---------- tips ---------- */
 .tips{list-style:none;padding:0;margin:0;counter-reset:tip;display:grid;gap:.7rem}
 .tips li{
@@ -467,10 +740,112 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
 }
 .tips strong{color:var(--text);font-weight:650}
 
+/* ---------- FAQ ---------- */
+.faq{display:grid;gap:.55rem}
+.faq details{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+}
+.faq details[open]{border-color:var(--border-2)}
+.faq summary{
+  list-style:none;
+  cursor:pointer;
+  padding:.95rem 2.6rem .95rem 1rem;
+  font-size:.9rem;
+  font-weight:600;
+  color:var(--text);
+  position:relative;
+  transition:color .18s ease;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--brass-bright)}
+.faq summary:focus-visible{outline:2px solid var(--brass-bright);outline-offset:-2px}
+.faq summary::after{
+  content:"";
+  position:absolute;
+  right:1.05rem;top:50%;
+  width:7px;height:7px;
+  border-right:2px solid var(--text-faint);
+  border-bottom:2px solid var(--text-faint);
+  transform:translateY(-70%) rotate(45deg);
+  transition:transform .2s ease,border-color .18s ease;
+}
+.faq details[open] summary::after{
+  transform:translateY(-30%) rotate(-135deg);
+  border-color:var(--brass);
+}
+.faq .answer{
+  padding:0 1rem 1rem;
+  color:var(--text-dim);
+  font-size:.86rem;
+  line-height:1.6;
+}
+.faq .answer strong{color:var(--text)}
+
+/* ---------- privacy strip ---------- */
+.privacy-strip{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:.75rem;
+  margin-top:1.35rem;
+  padding-top:1.35rem;
+  border-top:1px solid var(--border);
+}
+.privacy-strip .item{
+  display:flex;
+  gap:.6rem;
+  align-items:flex-start;
+  font-size:.8rem;
+  color:var(--text-dim);
+  line-height:1.45;
+}
+.privacy-strip .item svg{
+  width:17px;height:17px;
+  flex:none;
+  color:var(--brass);
+  margin-top:.15rem;
+}
+.privacy-strip .item strong{color:var(--text);display:block;font-size:.83rem;margin-bottom:.1rem}
+
+/* ---------- ad slots (respectful) ---------- */
+.ad-slot{
+  position:relative;
+  margin:1.75rem 0;
+  min-height:120px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  padding:1rem .75rem;
+  background:linear-gradient(180deg,rgba(23,27,38,.55),rgba(23,27,38,.25));
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+}
+.ad-slot .ad-label{
+  font-size:.6rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  opacity:.75;
+}
+.ad-slot ins{
+  display:block;
+  width:100%;
+  min-height:90px;
+}
+
 /* ---------- misc ---------- */
 .sr-only{
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.sr-only-focusable:focus{
+  position:static;width:auto;height:auto;margin:0;overflow:visible;
+  clip:auto;white-space:normal;
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -480,6 +855,7 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
     transition-duration:.001ms !important;
   }
   .reveal{opacity:1 !important;transform:none !important}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>
@@ -491,21 +867,38 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   <header class="hero">
     <ul class="badges reveal" style="--d:0ms">
       <li class="badge">Free</li>
-      <li class="badge">Private</li>
+      <li class="badge">100% client-side</li>
       <li class="badge">No sign-up</li>
     </ul>
     <h1 class="reveal" style="--d:60ms">Strong Password Generator</h1>
-    <p class="lede reveal" style="--d:110ms">Create a random, hard&#8209;to&#8209;crack password in one tap — or check how strong your current one really is. Everything happens right here in your browser.</p>
+    <p class="lede reveal" style="--d:110ms">Create a random, hard&#8209;to&#8209;crack password, a memorable passphrase, or a PIN in one tap — then check how strong it really is and whether it has ever been leaked. Everything happens in your browser.</p>
   </header>
 
+  <!-- ===================== GENERATOR ===================== -->
   <section class="card card-gen reveal" style="--d:170ms" aria-labelledby="genHeading">
     <h2 id="genHeading" class="sr-only">Generate a password</h2>
+
+    <div class="mode-tabs" role="tablist" aria-label="Generation mode">
+      <button type="button" class="mode-tab" role="tab" id="tabPassword" aria-selected="true" aria-controls="panelPassword">Password</button>
+      <button type="button" class="mode-tab" role="tab" id="tabPassphrase" aria-selected="false" aria-controls="panelPassphrase">Passphrase</button>
+      <button type="button" class="mode-tab" role="tab" id="tabPin" aria-selected="false" aria-controls="panelPin">PIN</button>
+    </div>
+
+    <div class="presets" role="group" aria-label="Recommended presets">
+      <button type="button" class="preset-chip" data-preset="banking">🏦 Banking</button>
+      <button type="button" class="preset-chip" data-preset="email">📧 Email</button>
+      <button type="button" class="preset-chip" data-preset="social">💬 Social</button>
+      <button type="button" class="preset-chip" data-preset="wifi">📶 Wi-Fi</button>
+      <button type="button" class="preset-chip" data-preset="pin">🔢 PIN</button>
+    </div>
 
     <div class="plate" id="plate">
       <p class="password is-empty" id="passwordOutput" aria-live="polite">Your new password will appear here</p>
     </div>
 
     <p class="meta" id="metaLine"></p>
+
+    <button type="button" class="check-link" id="checkThisBtn">Check if this password has ever been leaked →</button>
 
     <div class="actions">
       <button type="button" class="btn btn-primary" id="copyBtn">
@@ -518,12 +911,15 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
       </button>
     </div>
 
-    <div class="controls">
-      <div class="slider-head">
-        <label class="label" for="lengthRange">Length</label>
-        <span class="length-chip" id="lengthValue">20</span>
+    <!-- Controls: PASSWORD MODE -->
+    <div class="controls" id="panelPassword" role="tabpanel" aria-labelledby="tabPassword">
+      <div class="control-group">
+        <div class="slider-head">
+          <label class="label" for="lengthRange">Length</label>
+          <span class="length-chip" id="lengthValue">20</span>
+        </div>
+        <input type="range" id="lengthRange" min="8" max="64" value="20" step="1" aria-label="Password length">
       </div>
-      <input type="range" id="lengthRange" min="8" max="64" value="20" step="1" aria-label="Password length">
 
       <div class="toggles">
         <label class="toggle">
@@ -556,9 +952,140 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
 
       <p class="hint" id="poolWarning" role="alert" hidden>Turn on at least one character type above.</p>
     </div>
+
+    <!-- Controls: PASSPHRASE MODE -->
+    <div class="controls" id="panelPassphrase" role="tabpanel" aria-labelledby="tabPassphrase" hidden>
+      <div class="control-group">
+        <div class="slider-head">
+          <label class="label" for="wordRange">Words</label>
+          <span class="length-chip" id="wordValue">5</span>
+        </div>
+        <input type="range" id="wordRange" min="3" max="8" value="5" step="1" aria-label="Number of words">
+      </div>
+
+      <div class="control-group">
+        <div class="slider-head">
+          <label class="label" for="sepSelect">Separator</label>
+        </div>
+        <div class="select-wrap">
+          <select id="sepSelect" aria-label="Word separator">
+            <option value=" ">Space</option>
+            <option value="-" selected>Hyphen ( - )</option>
+            <option value=".">Dot ( . )</option>
+            <option value="_">Underscore ( _ )</option>
+            <option value="">None</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="toggles">
+        <label class="toggle">
+          <input type="checkbox" id="optCapitalize" checked>
+          <span class="switch"></span>
+          <span class="toggle-label">Capitalize words</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="optAddNumber" checked>
+          <span class="switch"></span>
+          <span class="toggle-label">Append a number</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Controls: PIN MODE -->
+    <div class="controls" id="panelPin" role="tabpanel" aria-labelledby="tabPin" hidden>
+      <div class="control-group">
+        <div class="slider-head">
+          <label class="label" for="pinRange">Digits</label>
+          <span class="length-chip" id="pinValue">6</span>
+        </div>
+        <input type="range" id="pinRange" min="3" max="12" value="6" step="1" aria-label="PIN length">
+      </div>
+
+      <label class="toggle toggle-secondary" style="margin-top:0">
+        <input type="checkbox" id="optPinNoRepeat" checked>
+        <span class="switch"></span>
+        <span class="toggle-label">Avoid consecutive repeats (…33…)</span>
+      </label>
+    </div>
+
+    <!-- Privacy strip -->
+    <div class="privacy-strip">
+      <div class="item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg>
+        <span><strong>Nothing leaves your device</strong>Generation and strength analysis run entirely in JavaScript.</span>
+      </div>
+      <div class="item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span><strong>Cryptographically secure</strong>Uses <code style="font-family:var(--mono);font-size:.78em">crypto.getRandomValues</code> with rejection sampling.</span>
+      </div>
+      <div class="item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span><strong>Instant &amp; unlimited</strong>No accounts, no limits, no tracking pixels in the tool itself.</span>
+      </div>
+    </div>
   </section>
 
-  <section class="card card-check reveal" aria-labelledby="checkHeading">
+  <!-- ============ AD SLOT 1 — natural pause after generating ============ -->
+  <div class="ad-slot reveal" style="--d:0ms" aria-label="Advertisement">
+    <span class="ad-label">Advertisement</span>
+    <!--
+      AdSense ad unit.
+      Replace data-ad-slot with your real ad unit ID from AdSense > Ads > By ad unit.
+    -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4345332236367349"
+         data-ad-slot="1111111111"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ===================== BULK GENERATOR ===================== -->
+  <section class="card reveal" aria-labelledby="bulkHeading">
+    <h2 id="bulkHeading" class="section-title">Bulk generator</h2>
+    <p class="section-sub">Generate up to 100 passwords at once. Export as CSV or TXT — nothing is uploaded.</p>
+
+    <div class="presets" role="group" aria-label="Bulk count">
+      <button type="button" class="preset-chip" data-bulk="5">5</button>
+      <button type="button" class="preset-chip" data-bulk="10">10</button>
+      <button type="button" class="preset-chip" data-bulk="25">25</button>
+      <button type="button" class="preset-chip" data-bulk="50">50</button>
+      <button type="button" class="preset-chip" data-bulk="100">100</button>
+    </div>
+
+    <div class="actions" style="margin-top:.25rem">
+      <button type="button" class="btn btn-primary" id="bulkGenBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg>
+        <span>Generate batch</span>
+      </button>
+      <button type="button" class="btn btn-ghost" id="bulkClearBtn" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+        <span>Clear</span>
+      </button>
+    </div>
+
+    <ul class="bulk-list" id="bulkList" aria-live="polite"></ul>
+
+    <div class="bulk-actions" id="bulkActions" hidden>
+      <button type="button" class="btn btn-ghost btn-sm" id="bulkCopyAllBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/></svg>
+        Copy all
+      </button>
+      <button type="button" class="btn btn-ghost btn-sm" id="bulkCsvBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download CSV
+      </button>
+      <button type="button" class="btn btn-ghost btn-sm" id="bulkTxtBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download TXT
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================== STRENGTH CHECKER ===================== -->
+  <section class="card reveal" aria-labelledby="checkHeading">
     <h2 id="checkHeading" class="section-title">Check your password's strength</h2>
     <p class="section-sub">Typed here, analysed here. Nothing leaves your device.</p>
 
@@ -576,25 +1103,220 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
     <p class="crack" id="crackTime"></p>
 
     <ul class="feedback" id="feedbackList" hidden></ul>
+
+    <div class="checker-actions">
+      <button type="button" class="btn btn-ghost btn-sm" id="checkBreachBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6l-8-4Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        <span>Check if leaked</span>
+      </button>
+    </div>
+
+    <div class="breach-result" id="breachResult" hidden>
+      <span class="dot"></span>
+      <span id="breachText"></span>
+    </div>
   </section>
 
-  <section class="card card-tips reveal" aria-labelledby="tipsHeading">
+  <!-- ============ AD SLOT 2 — natural pause after checking ============ -->
+  <div class="ad-slot reveal" style="--d:0ms" aria-label="Advertisement">
+    <span class="ad-label">Advertisement</span>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4345332236367349"
+         data-ad-slot="2222222222"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ===================== HISTORY ===================== -->
+  <section class="card reveal" aria-labelledby="historyHeading">
+    <h2 id="historyHeading" class="section-title">Recently copied</h2>
+    <p class="section-sub">Optional. Stored only in this browser — never sent anywhere.</p>
+
+    <label class="toggle toggle-secondary" style="margin-top:0">
+      <input type="checkbox" id="optHistory">
+      <span class="switch"></span>
+      <span class="toggle-label">Remember the last 10 passwords I copy</span>
+    </label>
+
+    <div id="historyBody" hidden style="margin-top:1rem">
+      <ul class="history-list" id="historyList" aria-live="polite"></ul>
+      <p class="history-empty" id="historyEmpty">Nothing here yet.</p>
+      <div style="margin-top:.85rem">
+        <button type="button" class="btn btn-ghost btn-sm" id="historyClearBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+          Clear history
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TIPS ===================== -->
+  <section class="card reveal" aria-labelledby="tipsHeading">
     <h2 id="tipsHeading" class="section-title">What actually makes a password strong</h2>
-    <p class="section-sub">Four rules that matter more than anything else.</p>
+    <p class="section-sub">Five rules that matter more than anything else.</p>
     <ul class="tips">
       <li><strong>Length beats complexity.</strong> A 16-character password is dramatically harder to crack than an 8-character one, even with fewer symbol types.</li>
       <li><strong>Never reuse a password.</strong> If one site leaks it, every account using it is exposed too.</li>
-      <li><strong>Random words work as well as random characters.</strong> Four unrelated words strung together is long, memorable and just as strong.</li>
+      <li><strong>Random words work as well as random characters.</strong> Four to six unrelated words strung together is long, memorable and just as strong.</li>
       <li><strong>Save it somewhere real.</strong> A password manager remembers your passwords so you never have to reuse or simplify one again.</li>
+      <li><strong>Turn on two-factor authentication.</strong> Even a perfect password can be phished — 2FA stops the attacker who already has it.</li>
     </ul>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="card reveal" aria-labelledby="faqHeading">
+    <h2 id="faqHeading" class="section-title">Frequently asked questions</h2>
+    <p class="section-sub">Short answers to the things people ask most.</p>
+
+    <div class="faq">
+      <details>
+        <summary>Are online password generators safe?</summary>
+        <div class="answer">Only if they run entirely in your browser. This one does — the password is created with <code style="font-family:var(--mono);font-size:.85em">crypto.getRandomValues</code> inside your device and is never transmitted. You can verify this by opening your browser's Network tab and generating a password: no request is sent. If a generator asks you to click "generate on server", close the tab.</div>
+      </details>
+
+      <details>
+        <summary>How long should my password be?</summary>
+        <div class="answer">For most accounts, <strong>16 characters or more</strong> is a good target. For high-value accounts (email, banking, password manager) aim for 20+. Length adds entropy exponentially: every extra character multiplies the search space by the size of the character pool.</div>
+      </details>
+
+      <details>
+        <summary>What is a passphrase and why use one?</summary>
+        <div class="answer">A passphrase is several random words joined together (for example <em>copper-lantern-otter-glide</em>). Because words are easy to type and remember, you can make a passphrase much longer than a typical password without it becoming painful — and length is what actually stops attackers.</div>
+      </details>
+
+      <details>
+        <summary>What does "bits of entropy" mean?</summary>
+        <div class="answer">Entropy measures how unpredictable a password is. Each additional bit doubles the number of guesses an attacker would need on average. Roughly: <strong>&lt;35 bits</strong> is weak, <strong>35–59</strong> is fair, <strong>60–79</strong> is strong, and <strong>80+</strong> is very strong against offline attacks.</div>
+      </details>
+
+      <details>
+        <summary>How does the leak check work without sending my password?</summary>
+        <div class="answer">It uses the <strong>k-Anonymity</strong> model from Have I Been Pwned. Your password is hashed with SHA-1 locally, and only the <em>first five characters</em> of that hash are sent to the API. The API returns every breached hash starting with those five characters — typically several hundred — and your browser checks whether your full hash is in that list. The server never sees your password or your full hash.</div>
+      </details>
+
+      <details>
+        <summary>Should I use a password manager?</summary>
+        <div class="answer">Yes. A manager lets you use a unique, long, random password for every site without memorising any of them. You only need to remember one strong master passphrase. This tool is for generating the passwords you then store in your manager.</div>
+      </details>
+    </div>
   </section>
 
 </main>
 
+<!-- ============ AD SLOT 3 — end of content ============ -->
+<div class="wrap" style="padding-top:0;padding-bottom:0">
+  <div class="ad-slot reveal" style="--d:0ms;margin-bottom:2rem" aria-label="Advertisement">
+    <span class="ad-label">Advertisement</span>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4345332236367349"
+         data-ad-slot="3333333333"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</div>
+
 <footer>
-  <p>Everything above runs in your browser. Nothing you generate or type is ever sent anywhere.</p>
-  <p style="margin-top: 12px;"><a href="../privacy.html" style="color: var(--brass); text-decoration: none;">Privacy Policy</a></p>
+  <p>Everything above runs in your browser. Nothing you generate or type is ever sent anywhere — except the first five characters of a SHA-1 hash when you explicitly click “Check if leaked”.</p>
+  <p style="margin-top: 12px;"><a href="../privacy.html">Privacy Policy</a></p>
 </footer>
+
+<!-- ===================== STRUCTURED DATA ===================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://example.com/#app",
+      "name": "Strong Password Generator",
+      "url": "https://example.com/",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Free, private, browser-based generator for strong random passwords, memorable passphrases, and PINs. Includes bulk generation, password strength analysis, and a k-Anonymity breach check.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Random password generator",
+        "Passphrase generator",
+        "PIN generator",
+        "Bulk password generation",
+        "Password strength checker",
+        "Have I Been Pwned breach check via k-Anonymity",
+        "100% client-side"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://example.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are online password generators safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if they run entirely in your browser. This one does — the password is created with crypto.getRandomValues inside your device and is never transmitted. You can verify this by opening your browser's Network tab while generating."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long should my password be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most accounts, 16 characters or more is a good target. For high-value accounts such as email, banking, or a password manager, aim for 20 or more. Each extra character multiplies the search space an attacker must cover."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a passphrase and why use one?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A passphrase is several random words joined together. Because words are easy to type and remember, a passphrase can be much longer than a typical password without becoming painful — and length is what actually stops attackers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does bits of entropy mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Entropy measures how unpredictable a password is. Each additional bit doubles the number of guesses an attacker would need on average. Under 35 bits is weak, 35 to 59 is fair, 60 to 79 is strong, and 80 or more is very strong against offline attacks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the leak check work without sending my password?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It uses the k-Anonymity model from Have I Been Pwned. Your password is hashed locally with SHA-1, and only the first five characters of that hash are sent to the API. The API returns every breached hash starting with those characters, and your browser checks whether your full hash is present. The server never sees your password."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use a password manager?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. A manager lets you use a unique, long, random password for every site without memorising any of them. You only need to remember one strong master passphrase."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://example.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Password Generator", "item": "https://example.com/" }
+      ]
+    }
+  ]
+}
+</script>
 
 <script>
 (function () {
@@ -613,7 +1335,6 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   function randomInt(max) {
     if (max <= 1) return 0;
     if (!hasCrypto) return Math.floor(Math.random() * max);
-    // Rejection sampling — removes modulo bias completely.
     var limit = Math.floor(4294967296 / max) * max;
     var v;
     do { crypto.getRandomValues(randBuf); v = randBuf[0]; } while (v >= limit);
@@ -638,16 +1359,16 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   }
 
   /* ============================================================
-     GENERATOR
+     Wordlist (curated, ~1100 common English words, 3–7 letters)
      ============================================================ */
-  var CHARSETS = {
-    upper:   "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    lower:   "abcdefghijklmnopqrstuvwxyz",
-    digits:  "0123456789",
-    symbols: "!@#$%^&*()-_=+[]{};:,.?"
-  };
-  var AMBIGUOUS = "0O1lI|";
+  var WORDLIST = ("able acid acorn actor adapt admit adopt adult after again agent agree ahead alarm album alert alien alike alive allow alone along alter amber amend among ample anchor ancient angel anger angle angry animal ankle answer antler anvil apex apple apron arbor arch arctic argue arise armor army aroma arrow artist aspen asset atlas atom attic audio audit avoid awake aware axis azure bacon badge bagel baker balance ballad ballet bamboo banana banjo banner barley barrel basket batch beach beacon beam beard beast beaver become before begin behave being belief belong below bench berry beside better between beyond bicycle bidder binary birch bird birth bishop bistro bitter black blade blame blank blast blaze bleak blend bless blimp blind blink bliss block bloom blown bluff blunt blush board boast bobcat boiler bold bonus boost booth border bottle bottom bounce bound bowl boxer brace braid brain brake branch brand brave bread break breeze brick bride bridge brief bright bring brisk broad broken bronze brook broom brown brush bubble bucket buckle budget buffalo bugle build built bulb bullet bundle bunker burden bureau burst butter button buyer cabin cable cactus cadet cage cake calm camel camera camp canal candle candy canoe canvas canyon capable captain carbon career cargo carpet carrot carry carve casual catalog catch cattle caught cause cavern cease cedar ceiling celery cement census cereal certain chain chalk chamber change channel chaos chapter charge charm chart chase cheap check cheese cherry chess chest chicken chief child chili chill chime china chip chirp choice choose chorus chrome chunk churn cider cinch circle circus citizen civic claim clamp clang clap clarify clash clasp class clean clear cleat clerk clever click cliff climb cling clinic clip cloak clock clone close cloth cloud clover clown club clue clumsy coach coal coast coat cobalt cobra cocoa coffee coin cold collar collect colony color column combat combo come comet comfort comic command common compact company compel compete complex compose compute concert conduct confirm congo connect consent consul contact contain contest context contour control convert convey cookie copper coral cord core cork corner correct cost cotton couch cougar could council count country couple courage course cousin cover coyote cozy crab crack cradle craft crane crash crater crawl crazy cream create credit creek creep crest crew cricket crime crisp critic crop cross crowd crown crucial crude cruise crumb crush crust crystal cube cubic culture cup curl current curtain curve custom cycle dagger daily dairy daisy damage damp dance danger daring dark data dawn deal debate debris decade decent decide deck decorate deep deer defeat defend define degree delay deliver demand denim depart depend depict deploy deposit depth deputy derive desert design desire desk detail detect device devote diagram dial diamond diary diesel diet differ digger digital dignity dilemma dinner dinosaur direct dirt discuss dish dismiss display distant ditch dive divide divine dizzy dock doctor dodge doing dollar dolphin domain donate donkey donor door dosage double dove down dozen draft dragon drama drastic draw dream dress drift drill drink drive drop drum dry duck dude duet duke dull dumb dune dusk dust duty dwarf dwell eager eagle early earn earth easily east easy echo ecology economy edge edit educate effect effort egg eight elbow elder elect elegant element elephant elevate elite ellipse elope embark ember emerge emotion employ empower empty enable enact end energy enforce engage engine enhance enjoy enlist enough enrich enroll ensure enter entire entry envelope envy equal equip era erase erode error erupt escape essay estate eternal ethics evaluate even evening event ever every evidence evolve exact exam exceed excel except excerpt excess exchange excite exclude excuse execute exhaust exhibit exile exist exit exotic expand expect expert expire explain explore export expose express extend extra eye fabric facade facing factor faculty fade faint fairy faith falcon fame family famous fancy fantasy farm fashion fatal father fatigue fault favor feature federal fee feed feel fellow fence ferry fetch fever fiber fiction field fierce figure file filter final finance find finger finish fire firm fiscal fish fist five flag flake flame flash flask flat flavor fleet flesh flight flint flip float flock floor floss flour flow flower fluid flush flute foam focus fog foil fold folk follow fond food foot force forest forge forget forgive fork form formal format former fort fortune forum forward fossil foster found fountain fox fraction fragile frame frank fraud free freeze frequent fresh friend fringe frog front frost frozen fruit fuel full fun function fund funny furnace further fusion future gadget gain galaxy gallery gamble game gap garage garden garlic garment gate gather gauge gaze gear gender gene general genius gentle genuine geography get ghost giant gift giggle ginger giraffe girl give given glad glacier glance glass glaze gleam glide glimpse global globe gloom glory glove glow glue goal goat going gold golf gondola good goose gorilla gospel gossip govern gown grab grace grade grain grand grant grape graph grasp grass grave gravity gray great green greet grid grief grill grim grin grip grocery groom ground group grove grow guard guess guest guide guilt guitar gulf gum gun gust gym habit hail hair half hall hammer hamster hand handle hang happy harbor hard hardly harm harmony harsh harvest hat hatch haul haven hazard head health heap hear heart heat heavy hedge height helium hello helmet help herb herd here hero hidden high hike hill hint hip hire history hit hobby hockey hold hole holiday hollow home honest honey honor hood hook hope horizon horn horse hospital host hotel hour house hover hub huge human humble humor hundred hunger hunt hurdle hurry hurt husband hybrid ice icon idea ideal identify idle image imagine impact imply import impose impress improve impulse inch include income indeed index indicate indoor infant inform inherit initial inject injury ink inner innocent input inquiry insert inside insight inspect install instant instead intact intend interest interior internet invent invest invite involve iron island isolate issue item ivory jacket jaguar jail jam jar jaw jazz jealous jeans jelly jewel job join joint joke jolly journal journey joy judge juice july jump jungle junior junk just keen keep kernel kettle key kick kid kidney kind kingdom kiss kitchen kite kitten knee knife knight knit knob knock knot know label labor ladder lady lake lamb lamp land lane language lantern lap large laser last late laugh launch laundry law lawn lawyer lay layer lazy lead leaf league lean leap learn lease leather leave lecture left leg legal legend lemon lend length lens leopard less lesson letter level liberty library license life lift light like lily limb lime limit line link lion liquid list listen literal little live lizard load loan lobby local locate lock lodge logic lonely long look loop loose lord lose loss lost loud love lower loyal lucky luggage lumber lunar lunch luxury machine magic magnet maid mail main major make mammal manage mango mansion manual maple marble march margin marine market marriage marsh marvel mask mass master match matrix matter mature maximum maybe mayor meadow meal mean measure meat medal media medicine medium meet melody melon member memory mental mentor menu mercy merge merit merry mesh message metal method middle midnight might mild mile milk mill mimic mind mine minor mint minute miracle mirror miss mist mix mobile model modern modest modify moment monitor monkey monster month moon moral more morning mosaic most mother motion motor mount mouse mouth move movie much muffin mug mule muscle museum mushroom music must mutual mystery myth nail naive name napkin narrow nation native natural nature navy near neat necessary neck need negative neighbor neither nephew nerve nest net network neutral never news next nice niche nickel niece night nimble nine noble nobody node noise nominal noodle noon normal north nose notable note nothing notice novel now nuclear number nurse nut oak oasis obey object oblige observe obtain obvious occupy occur ocean october offer office often oil okay older olive omega omit once one onion online only open opera opinion oppose option orange orbit orchard order ordinary organ orient origin ornament orphan ostrich other ounce out outcome outdoor outer outfit outline output outside oval oven over owl own oxygen oyster ozone pace pack page paid pain paint pair palace pale palm pancake panel panic paper parade parcel parent park parrot part party pass past pasta patch path patient patrol pattern pause pave payment peace peach peak peanut pear pearl peasant pedal pencil penguin people pepper perfect perform perhaps period permit person pet phase phone photo phrase physical piano pick picnic picture piece pig pigeon pile pilot pin pipe pistol pitch pivot pixel pizza place plain plan plane planet plant plastic plate play plaza pleasant please pledge plenty plot plug plunge plus pocket poem poet point polar pole police polish polite poll pond pool popular porch port portion position possible post potato pottery pound pour powder power practice praise pray precise predict prefer prepare present press pretend pretty prevent price pride primary prime print prior prism prison private prize problem process produce profit program progress project promise promote prompt proof proper propose protect proud prove provide public pudding pull pulse pumpkin punch pupil puppy purchase purple purpose purse push puzzle pyramid quail qualify quality quarter queen quest question quick quiet quilt quit quiz quote rabbit race radar radio raft rail rain rainbow raise rally ranch range rank rapid rare rate rather raven reach react read ready real reason rebel recall receive recent recipe record recover red reduce reed refer reflect reform refuse regard region regret regular reject relate relax release relief rely remain remark remedy remind remove render renew rent repair repeat replace reply report request require rescue research reserve resist resolve resort resource respect respond result retire retreat return reveal reverse review reward rhythm ribbon rice rich ride ridge rifle right rigid ring rinse ripple rise risk ritual rival river road roast robin robot rock rocket rode roll roof rookie room root rope rose rotate rough round route royal rub rubber rude rug rule run rural rush rustic sad saddle safe sail salad salmon salon salt salute same sample sand satisfy sauce sausage save savor saw say scale scan scare scatter scene scent school science scissors scope score scout scrap screen script scrub sculpture sea search season seat second secret section secure seed seek seem segment seize select sell senate send senior sense sentence separate series serious servant session settle several severe shade shadow shaft shake shallow shape share shark sharp shelf shell shelter shepherd shield shift shine ship shirt shock shoe shoot shop shore short shoulder shout show shrimp shrine shrink shrug shuffle shy sibling side siege sight sign signal silent silk silly silver similar simple since sincere sing single sink sip sister site six size skate sketch ski skill skin skip skirt skull slab slam slap sleep slender slice slide slight slim slip slope slot slow small smart smell smile smoke smooth snack snake snap sneak snow soap social socket soda soft soil solar sold soldier sole solid solve song soon sorry sort soul sound soup source south space spare spark speak special speed spell spend sphere spice spider spike spill spin spine spiral spirit split spoke sponsor spoon sport spot spray spread spring sprout spy square squash squeeze squirrel stable stack staff stage stair stake stamp stand staple star start state station stay steady steak steal steam steel steep steer stem step stereo stick stiff still sting stir stitch stock stomach stone stool stop storage store storm story stove straight strange stream street stress stretch strike string strip strong struggle study stuff style subject submit subway succeed success such sudden suffer sugar suggest suit summer summit sun sunny sunset super supply support suppose supreme sure surface surge surprise surround survey survive suspect sustain swallow swamp swap swarm swear sweat sweep sweet swell swift swim swing switch sword syllable symbol symptom system table tackle tactic tag tail tailor take tale talent talk tall tank tape target task taste tattoo taught tavern taxi teach team tear tease technical teeth tell temple tempo tenant tend tender tennis tense tent term terrace terrain terrible test text than thank that theme theory there thermal thick thin thing think third this thorn thought thread threat three thrive throat throne through throw thumb thunder ticket tide tidy tie tiger tight tile tilt timber time tiny tip tired tissue title toast today toe together toilet token tolerate tomato tomorrow tone tongue tonight tool tooth topic torch total touch tough tour tourist toward tower town toy trace track trade traffic trail train trait transfer transit translate trap trash travel tray treat tree trek trend trial tribe trick trigger trim trip trophy trouble truck true trust truth try tube tuition tumble tuna tune tunnel turkey turtle tutor twelve twenty twice twin twist type typical ugly ultimate umbrella unable uncle under uniform union unique unit unite universe unlock until unusual update upgrade uphold upper upset urban urge usage use useful usual utility vacant vaccine vacuum vague valid valley value valve van vanilla vapor variety various vase vast vault vehicle velvet vendor venture venue verify version very vessel veteran viable vibrant victory video view village vintage vinyl violet violin virtual virtue virus visa vision visit visual vital vivid vocal voice volcano volume vote voyage waffle wagon waist wait wake walk wall walnut walrus want war warm warn warrior wash waste watch water wave wax way weak wealth weapon wear weather weave web wedding week weekend weight weird welcome welfare well west wet whale wheat wheel when where whether which while whisper white whole why wide widget width wife wild will win wind window wine wing wink winner winter wire wisdom wise wish witness wizard wolf woman wonder wood wool word work world worry worth wound wrap wreck wrestle wrist write wrong yard yarn year yeast yellow yes yesterday yield yoga yogurt young your youth zebra zero zone zoo").split(" ");
 
+  var WORDS = WORDLIST.length;
+  var BITS_PER_WORD = Math.log2(WORDS);
+
+  /* ============================================================
+     DOM refs
+     ============================================================ */
   var lengthRange  = $("lengthRange");
   var lengthValue  = $("lengthValue");
   var optUpper     = $("optUpper");
@@ -662,8 +1383,60 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   var copyLabel    = $("copyLabel");
   var regenBtn     = $("regenBtn");
   var poolWarning  = $("poolWarning");
+  var checkThisBtn = $("checkThisBtn");
 
-  var state = { password: "" };
+  var wordRange      = $("wordRange");
+  var wordValue      = $("wordValue");
+  var sepSelect      = $("sepSelect");
+  var optCapitalize  = $("optCapitalize");
+  var optAddNumber   = $("optAddNumber");
+
+  var pinRange       = $("pinRange");
+  var pinValue       = $("pinValue");
+  var optPinNoRepeat = $("optPinNoRepeat");
+
+  var tabPassword   = $("tabPassword");
+  var tabPassphrase = $("tabPassphrase");
+  var tabPin        = $("tabPin");
+  var panelPassword   = $("panelPassword");
+  var panelPassphrase = $("panelPassphrase");
+  var panelPin        = $("panelPin");
+
+  var state = { mode: "password", password: "" };
+
+  /* ============================================================
+     Mode switching
+     ============================================================ */
+  var TABS = [
+    { tab: tabPassword,   panel: panelPassword,   mode: "password"   },
+    { tab: tabPassphrase, panel: panelPassphrase, mode: "passphrase" },
+    { tab: tabPin,        panel: panelPin,        mode: "pin"        }
+  ];
+
+  function setMode(mode) {
+    state.mode = mode;
+    TABS.forEach(function (t) {
+      var on = t.mode === mode;
+      t.tab.setAttribute("aria-selected", on ? "true" : "false");
+      t.panel.hidden = !on;
+    });
+    refreshPassword();
+  }
+
+  tabPassword.addEventListener("click", function () { setMode("password"); });
+  tabPassphrase.addEventListener("click", function () { setMode("passphrase"); });
+  tabPin.addEventListener("click", function () { setMode("pin"); });
+
+  /* ============================================================
+     GENERATORS
+     ============================================================ */
+  var CHARSETS = {
+    upper:   "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    lower:   "abcdefghijklmnopqrstuvwxyz",
+    digits:  "0123456789",
+    symbols: "!@#$%^&*()-_=+[]{};:,.?"
+  };
+  var AMBIGUOUS = "0O1lI|";
 
   function activeCategories() {
     var cats = [];
@@ -693,7 +1466,6 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
     }
     out = out.slice(0, length);
 
-    // Fisher–Yates shuffle so the guaranteed characters aren't stuck at the front.
     for (var i = out.length - 1; i > 0; i--) {
       var j = randomInt(i + 1);
       var tmp = out[i]; out[i] = out[j]; out[j] = tmp;
@@ -701,7 +1473,93 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
     return out.join("");
   }
 
-  /* --- scramble-in animation (never allowed to leave the box empty) --- */
+  function buildPassphrase(wordCount, separator, capitalize, addNumber) {
+    var words = [];
+    for (var i = 0; i < wordCount; i++) {
+      var w = WORDLIST[randomInt(WORDS)];
+      if (capitalize) w = w.charAt(0).toUpperCase() + w.slice(1);
+      words.push(w);
+    }
+    var phrase = words.join(separator);
+    if (addNumber) {
+      var n = randomInt(100);
+      phrase += (separator || "") + (n < 10 ? "0" + n : String(n));
+    }
+    return phrase;
+  }
+
+  function buildPin(length, noRepeat) {
+    var out = "";
+    var last = "";
+    for (var i = 0; i < length; i++) {
+      var d;
+      if (noRepeat && last !== "") {
+        d = String(randomInt(9));
+        if (d >= last) d = String(Number(d) + 1);
+      } else {
+        d = String(randomInt(10));
+      }
+      out += d;
+      last = d;
+    }
+    return out;
+  }
+
+  /* ============================================================
+     Generation entry point
+     ============================================================ */
+  function generateOne() {
+    if (state.mode === "password") {
+      var len = Number(lengthRange.value);
+      var cats = activeCategories();
+      if (!cats.length) return { error: "no-charset" };
+      return { value: buildPassword(len, cats), cats: cats, len: len };
+    }
+    if (state.mode === "passphrase") {
+      var wc = Number(wordRange.value);
+      var sep = sepSelect.value;
+      var cap = optCapitalize.checked;
+      var num = optAddNumber.checked;
+      return {
+        value: buildPassphrase(wc, sep, cap, num),
+        passphrase: { words: wc, cap: cap, num: num }
+      };
+    }
+    // pin
+    var pl = Number(pinRange.value);
+    return { value: buildPin(pl, optPinNoRepeat.checked), pin: { len: pl } };
+  }
+
+  /* ============================================================
+     Meta / entropy display
+     ============================================================ */
+  function updateMeta(result) {
+    var bits = 0;
+    var label = "";
+
+    if (result.cats) {
+      var pool = result.cats.join("").length;
+      bits = result.len * Math.log2(Math.max(pool, 2));
+      label = result.len + " characters · ~" + Math.round(bits) + " bits of entropy";
+    } else if (result.passphrase) {
+      bits = result.passphrase.words * BITS_PER_WORD;
+      if (result.passphrase.cap) bits += result.passphrase.words;
+      if (result.passphrase.num) bits += Math.log2(100);
+      label = result.passphrase.words + " words · ~" + Math.round(bits) + " bits of entropy";
+    } else if (result.pin) {
+      bits = result.pin.len * Math.log2(10);
+      label = result.pin.len + " digits · ~" + Math.round(bits) + " bits of entropy";
+    }
+
+    var level = levelFromBits(bits);
+    metaLine.innerHTML =
+      '<span class="pip" style="background:' + LEVELS[level].color + '"></span>' +
+      '<span>' + label + '</span>';
+  }
+
+  /* ============================================================
+     Scramble animation
+     ============================================================ */
   var rafId = null;
 
   function animatePassword(finalText) {
@@ -714,11 +1572,10 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
 
     var glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
     var n = finalText.length;
-    var DURATION = 300;
+    var DURATION = 280;
     var t0 = performance.now();
     var prevLive = passwordEl.getAttribute("aria-live");
 
-    // Stop screen readers announcing every scrambled frame.
     passwordEl.setAttribute("aria-live", "off");
 
     function step(now) {
@@ -732,7 +1589,7 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
       if (t < 1) {
         rafId = requestAnimationFrame(step);
       } else {
-        passwordEl.textContent = finalText;   // final, exact value
+        passwordEl.textContent = finalText;
         passwordEl.setAttribute("aria-live", prevLive || "polite");
         rafId = null;
       }
@@ -743,58 +1600,56 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   function pulsePlate() {
     if (reduceMotion) return;
     plate.classList.remove("pulse");
-    void plate.offsetWidth;   // force reflow to restart the animation
+    void plate.offsetWidth;
     plate.classList.add("pulse");
   }
 
-  function updateSliderFill() {
-    var min = Number(lengthRange.min);
-    var max = Number(lengthRange.max);
-    var val = Number(lengthRange.value);
+  function updateSliderFill(rangeEl) {
+    var min = Number(rangeEl.min);
+    var max = Number(rangeEl.max);
+    var val = Number(rangeEl.value);
     var pct = max === min ? 0 : ((val - min) / (max - min)) * 100;
-    lengthRange.style.setProperty("--fill", pct + "%");
+    rangeEl.style.setProperty("--fill", pct + "%");
   }
 
-  function updateMeta(len, cats) {
-    var pool = cats.join("").length;
-    var bits = Math.round(len * Math.log2(Math.max(pool, 2)));
-    var level = levelFromBits(bits);
-
-    metaLine.innerHTML =
-      '<span class="pip" style="background:' + LEVELS[level].color + '"></span>' +
-      '<span>' + len + ' characters &middot; ~' + bits + ' bits of entropy</span>';
-  }
-
+  /* ============================================================
+     Main refresh
+     ============================================================ */
   function refreshPassword() {
-    var len = Number(lengthRange.value);
-    lengthValue.textContent = String(len);
-    updateSliderFill();
+    lengthValue.textContent = String(lengthRange.value);
+    wordValue.textContent   = String(wordRange.value);
+    pinValue.textContent    = String(pinRange.value);
+    updateSliderFill(lengthRange);
+    updateSliderFill(wordRange);
+    updateSliderFill(pinRange);
 
-    var cats = activeCategories();
-
-    if (!cats.length) {
+    // password-mode charset guard
+    if (state.mode === "password" && !activeCategories().length) {
       state.password = "";
       passwordEl.textContent = "Select at least one character type";
       passwordEl.classList.add("is-empty");
       metaLine.innerHTML = "";
       poolWarning.hidden = false;
       copyBtn.disabled = true;
+      checkThisBtn.style.display = "none";
       return;
     }
-
     poolWarning.hidden = true;
     copyBtn.disabled = false;
+    checkThisBtn.style.display = "";
 
-    var pw = buildPassword(len, cats);
-    state.password = pw;
+    var result = generateOne();
+    state.password = result.value;
 
     passwordEl.classList.remove("is-empty");
-    animatePassword(pw);
+    animatePassword(result.value);
     pulsePlate();
-    updateMeta(len, cats);
+    updateMeta(result);
   }
 
-  /* --- copy --- */
+  /* ============================================================
+     Copy
+     ============================================================ */
   var copyTimer = null;
 
   function showCopied() {
@@ -807,46 +1662,209 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
     }, 1600);
   }
 
-  function copyPassword() {
-    if (!state.password) return;
-
+  function writeClipboard(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(state.password).then(showCopied, legacyCopy);
-    } else {
-      legacyCopy();
+      return navigator.clipboard.writeText(text);
     }
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;";
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      ok ? resolve() : reject(new Error("copy failed"));
+    });
   }
 
-  function legacyCopy() {
-    var ta = document.createElement("textarea");
-    ta.value = state.password;
-    ta.setAttribute("readonly", "");
-    ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;";
-    document.body.appendChild(ta);
-    ta.select();
-    ta.setSelectionRange(0, ta.value.length);
-
-    var ok = false;
-    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
-    document.body.removeChild(ta);
-
-    if (ok) {
+  function copyPassword() {
+    if (!state.password) return;
+    writeClipboard(state.password).then(function () {
       showCopied();
-    } else {
+      recordHistory(state.password);
+    }, function () {
       copyLabel.textContent = "Press Ctrl+C";
       clearTimeout(copyTimer);
       copyTimer = setTimeout(function () { copyLabel.textContent = "Copy"; }, 1800);
-    }
+    });
   }
 
-  /* --- wiring --- */
-  [lengthRange, optUpper, optLower, optDigits, optSymbols, optAmbiguous]
+  /* ============================================================
+     Wiring — generator
+     ============================================================ */
+  [lengthRange, optUpper, optLower, optDigits, optSymbols, optAmbiguous,
+   wordRange, sepSelect, optCapitalize, optAddNumber,
+   pinRange, optPinNoRepeat]
     .forEach(function (el) { el.addEventListener("input", refreshPassword); });
 
   regenBtn.addEventListener("click", refreshPassword);
   copyBtn.addEventListener("click", copyPassword);
 
-  refreshPassword();
+  /* ============================================================
+     Presets
+     ============================================================ */
+  var PRESETS = {
+    banking: { mode: "password", length: 20, upper: true, lower: true, digits: true, symbols: true, ambiguous: false },
+    email:   { mode: "password", length: 16, upper: true, lower: true, digits: true, symbols: true, ambiguous: false },
+    social:  { mode: "password", length: 14, upper: true, lower: true, digits: true, symbols: true, ambiguous: false },
+    wifi:    { mode: "password", length: 24, upper: true, lower: true, digits: true, symbols: false, ambiguous: false },
+    pin:     { mode: "pin", length: 6, noRepeat: true }
+  };
+
+  document.querySelectorAll(".preset-chip[data-preset]").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      var p = PRESETS[chip.getAttribute("data-preset")];
+      if (!p) return;
+
+      if (p.mode === "pin") {
+        setMode("pin");
+        pinRange.value = String(p.length);
+        optPinNoRepeat.checked = !!p.noRepeat;
+      } else {
+        setMode("password");
+        lengthRange.value = String(p.length);
+        optUpper.checked = !!p.upper;
+        optLower.checked = !!p.lower;
+        optDigits.checked = !!p.digits;
+        optSymbols.checked = !!p.symbols;
+        optAmbiguous.checked = !!p.ambiguous;
+      }
+      refreshPassword();
+    });
+  });
+
+  /* ============================================================
+     Bulk generation
+     ============================================================ */
+  var bulkList    = $("bulkList");
+  var bulkActions = $("bulkActions");
+  var bulkGenBtn  = $("bulkGenBtn");
+  var bulkClearBtn= $("bulkClearBtn");
+  var bulkCopyAll = $("bulkCopyAllBtn");
+  var bulkCsvBtn  = $("bulkCsvBtn");
+  var bulkTxtBtn  = $("bulkTxtBtn");
+
+  var bulkCount = 10;
+  var bulkData = [];
+
+  var COPY_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/></svg>';
+
+  document.querySelectorAll(".preset-chip[data-bulk]").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      bulkCount = Number(chip.getAttribute("data-bulk"));
+      document.querySelectorAll(".preset-chip[data-bulk]").forEach(function (c) {
+        c.style.borderColor = "";
+        c.style.color = "";
+      });
+      chip.style.borderColor = "var(--brass)";
+      chip.style.color = "var(--brass-bright)";
+    });
+  });
+  // default highlight
+  (function () {
+    var def = document.querySelector('.preset-chip[data-bulk="10"]');
+    if (def) { def.style.borderColor = "var(--brass)"; def.style.color = "var(--brass-bright)"; }
+  })();
+
+  function runBulk() {
+    if (state.mode === "password" && !activeCategories().length) {
+      alert("Turn on at least one character type first.");
+      return;
+    }
+    bulkData = [];
+    for (var i = 0; i < bulkCount; i++) {
+      bulkData.push(generateOne().value);
+    }
+    renderBulk();
+  }
+
+  function renderBulk() {
+    bulkList.innerHTML = bulkData.map(function (pw, i) {
+      return '<li class="bulk-item">' +
+        '<span class="idx">' + (i + 1) + '</span>' +
+        '<span class="pw">' + escapeHtml(pw) + '</span>' +
+        '<button type="button" class="icon-btn" data-copy="' + i + '" aria-label="Copy password ' + (i + 1) + '">' + COPY_ICON + '</button>' +
+      '</li>';
+    }).join("");
+
+    var has = bulkData.length > 0;
+    bulkActions.hidden = !has;
+    bulkClearBtn.disabled = !has;
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function (c) {
+      return ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[c];
+    });
+  }
+
+  bulkGenBtn.addEventListener("click", runBulk);
+
+  bulkClearBtn.addEventListener("click", function () {
+    bulkData = [];
+    renderBulk();
+  });
+
+  bulkList.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-copy]");
+    if (!btn) return;
+    var i = Number(btn.getAttribute("data-copy"));
+    var pw = bulkData[i];
+    if (!pw) return;
+    writeClipboard(pw).then(function () {
+      btn.style.color = "var(--strong)";
+      btn.style.borderColor = "var(--strong)";
+      setTimeout(function () {
+        btn.style.color = "";
+        btn.style.borderColor = "";
+      }, 1200);
+    });
+  });
+
+  bulkCopyAll.addEventListener("click", function () {
+    if (!bulkData.length) return;
+    writeClipboard(bulkData.join("\n")).then(function () {
+      var old = bulkCopyAll.innerHTML;
+      bulkCopyAll.textContent = "Copied!";
+      setTimeout(function () { bulkCopyAll.innerHTML = old; }, 1400);
+    });
+  });
+
+  function downloadFile(filename, content, mime) {
+    var blob = new Blob([content], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function csvEscape(s) {
+    if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  bulkCsvBtn.addEventListener("click", function () {
+    if (!bulkData.length) return;
+    var rows = ['"#","password"'];
+    bulkData.forEach(function (pw, i) {
+      rows.push((i + 1) + "," + csvEscape(pw));
+    });
+    downloadFile("passwords.csv", rows.join("\r\n"), "text/csv;charset=utf-8");
+  });
+
+  bulkTxtBtn.addEventListener("click", function () {
+    if (!bulkData.length) return;
+    downloadFile("passwords.txt", bulkData.join("\n"), "text/plain;charset=utf-8");
+  });
 
   /* ============================================================
      STRENGTH CHECKER
@@ -861,7 +1879,26 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
     "cheese","tigger","amanda","access","yankees","dallas","austin","thunder",
     "taylor","matrix","mustang","batman","andrew","joshua","biteme","1234567890",
     "000000","121212","zaq1zaq1","q1w2e3r4","asdfghjkl","1q2w3e4r","changeme",
-    "default","guest","test123","secret","letmein123","iloveyou1"
+    "default","guest","test123","secret","letmein123","iloveyou1","password123",
+    "admin123","root","toor","pass","1111","2222","3333","4444","5555","6666",
+    "7777","8888","9999","0000","112233","654321","987654321","qwertyuiop",
+    "zxcvbnm","asdfgh","poiuyt","lkjhgf","0987654321","abcdef","abcd1234",
+    "p@ssw0rd","p@ssword","password!","welcome1","welcome123","letmein1",
+    "monkey123","dragon123","master123","shadow1","sunshine1","princess1",
+    "football1","baseball1","superman1","batman1","trustno1","whatever1",
+    "hello123","hello1","freedom1","flower","flower1","iloveyou2","loveyou",
+    "loveme","lovely","sweetheart","babygirl","babyboy","angel","angels",
+    "hunter2","hunter123","ranger1","buster1","soccer1","hockey1","killer1",
+    "george1","computer1","jordan1","harley1","robert1","matthew1","jessica1",
+    "cheese1","tigger1","amanda1","access1","yankees1","dallas1","austin1",
+    "thunder1","taylor1","matrix1","mustang1","andrew1","joshua1","biteme1",
+    "summer","summer1","winter","winter1","spring","autumn","january","february",
+    "monday","tuesday","wednesday","thursday","friday","saturday","sunday",
+    "january1","monday1","friday1","sunday1","soccer","qwerty1","asdf1234",
+    "google","facebook","twitter","instagram","youtube","linkedin","snapchat",
+    "tiktok","whatsapp","telegram","discord","reddit","netflix","amazon",
+    "apple","microsoft","windows","android","iphone","samsung","nintendo",
+    "playstation","xbox","minecraft","fortnite","pokemon","starwars1","startrek"
   ];
 
   var LEET_MAP = { "@":"a","4":"a","3":"e","1":"i","!":"i","0":"o","$":"s","5":"s","7":"t" };
@@ -923,7 +1960,6 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   }
 
   function crackSecondsFromBits(bits) {
-    // 10 billion guesses/second, average case = half the keyspace.
     return Math.pow(2, bits) / 1e10 / 2;
   }
 
@@ -963,18 +1999,18 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
     if (!/[a-z]/.test(pw)) tips.push("Add a lowercase letter.");
     if (!/[0-9]/.test(pw)) tips.push("Add a number.");
     if (!/[^a-zA-Z0-9]/.test(pw)) tips.push("Add a symbol.");
-    if (repeatPenaltyChars(pw) > 0) tips.push("Avoid repeating the same character.");
+    if (repeatPenaltyChars(pw) > 0) tips.push("Avoid repeating the same character three or more times.");
     if (sequentialPenaltyChars(pw) > 0) tips.push('Avoid sequences like "abc" or "123".');
     if (isCommonPattern(pw)) tips.push("This resembles a commonly leaked password — avoid it entirely.");
     return tips.slice(0, 3);
   }
 
-  var pwInput      = $("pwInput");
-  var toggleShow   = $("toggleShow");
-  var meterSegs    = document.querySelectorAll(".meter .seg");
+  var pwInput       = $("pwInput");
+  var toggleShow    = $("toggleShow");
+  var meterSegs     = document.querySelectorAll(".meter .seg");
   var strengthLabel = $("strengthLabel");
-  var crackTimeEl  = $("crackTime");
-  var feedbackList = $("feedbackList");
+  var crackTimeEl   = $("crackTime");
+  var feedbackList  = $("feedbackList");
 
   var EYE_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -999,12 +2035,20 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   function resetMeter() {
     for (var i = 0; i < meterSegs.length; i++) {
       meterSegs[i].style.background = "";
+      meterSegs[i].style.color = "";
       meterSegs[i].classList.remove("on");
     }
   }
 
+  function hideBreachResult() {
+    var box = $("breachResult");
+    box.hidden = true;
+    box.className = "breach-result";
+  }
+
   function updateChecker() {
     var pw = pwInput.value;
+    hideBreachResult();
 
     if (!pw) {
       resetMeter();
@@ -1023,7 +2067,7 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
     for (var i = 0; i < meterSegs.length; i++) {
       if (i <= level) {
         meterSegs[i].style.background = info.color;
-        meterSegs[i].style.color = info.color;   // drives the glow
+        meterSegs[i].style.color = info.color;
         meterSegs[i].classList.add("on");
       } else {
         meterSegs[i].style.background = "";
@@ -1051,6 +2095,244 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   pwInput.addEventListener("input", updateChecker);
 
   /* ============================================================
+     HIBP k-Anonymity breach check
+     ============================================================ */
+  var breachBtn  = $("checkBreachBtn");
+  var breachBox  = $("breachResult");
+  var breachText = $("breachText");
+  var breachBusy = false;
+
+  function bufToHex(buf) {
+    var bytes = new Uint8Array(buf);
+    var out = "";
+    for (var i = 0; i < bytes.length; i++) {
+      out += (bytes[i] < 16 ? "0" : "") + bytes[i].toString(16);
+    }
+    return out.toUpperCase();
+  }
+
+  function showBreach(cls, html) {
+    breachBox.className = "breach-result " + cls;
+    breachText.innerHTML = html;
+    breachBox.hidden = false;
+  }
+
+  function checkBreach(password) {
+    if (breachBusy) return;
+
+    if (!password) {
+      showBreach("is-warn", "Type a password above first.");
+      return;
+    }
+    if (!window.crypto || !window.crypto.subtle) {
+      showBreach("is-warn", "This check needs HTTPS (or localhost) because it uses the Web Crypto API. Your password is still safe — the browser just won't let the page hash it here.");
+      return;
+    }
+
+    breachBusy = true;
+    breachBtn.disabled = true;
+    showBreach("is-warn", '<span class="spinner"></span>Checking Have I Been Pwned…');
+
+    var enc = new TextEncoder();
+    crypto.subtle.digest("SHA-1", enc.encode(password))
+      .then(function (hashBuf) {
+        var hex = bufToHex(hashBuf);
+        var prefix = hex.slice(0, 5);
+        var suffix = hex.slice(5);
+
+        return fetch("https://api.pwnedpasswords.com/range/" + prefix, {
+          headers: { "Add-Padding": "true" }
+        }).then(function (res) {
+          if (!res.ok) throw new Error("HIBP request failed: " + res.status);
+          return res.text().then(function (text) {
+            return { text: text, suffix: suffix };
+          });
+        });
+      })
+      .then(function (data) {
+        var lines = data.text.split(/\r?\n/);
+        var count = 0;
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i].trim();
+          if (!line) continue;
+          var idx = line.indexOf(":");
+          if (idx === -1) continue;
+          if (line.slice(0, idx) === data.suffix) {
+            count = parseInt(line.slice(idx + 1), 10) || 0;
+            break;
+          }
+        }
+
+        if (count > 0) {
+          showBreach("is-bad",
+            "<strong>This password has appeared in known data breaches " +
+            count.toLocaleString() + " times.</strong> Do not use it. " +
+            "Pick a different password — preferably one generated above.");
+        } else {
+          showBreach("is-good",
+            "<strong>Good news — this password was not found in any known breach.</strong> " +
+            "That doesn't guarantee it's strong, so check the meter above too.");
+        }
+      })
+      .catch(function (err) {
+        showBreach("is-warn",
+          "Couldn't reach the breach database right now. Your password was never sent anywhere — only the first 5 characters of its SHA‑1 hash would have been. Try again in a moment.");
+        if (window.console) console.warn(err);
+      })
+      .then(function () {
+        breachBusy = false;
+        breachBtn.disabled = false;
+      });
+  }
+
+  breachBtn.addEventListener("click", function () {
+    checkBreach(pwInput.value);
+  });
+
+  checkThisBtn.addEventListener("click", function () {
+    if (!state.password) return;
+    pwInput.value = state.password;
+    pwInput.type = "text";
+    toggleShow.innerHTML = EYE_OFF_ICON;
+    toggleShow.setAttribute("aria-label", "Hide password");
+    updateChecker();
+    checkBreach(state.password);
+    pwInput.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  });
+
+  /* ============================================================
+     History (opt-in, localStorage only)
+     ============================================================ */
+  var HISTORY_KEY = "spg_history_v1";
+  var optHistory  = $("optHistory");
+  var historyBody = $("historyBody");
+  var historyList = $("historyList");
+  var historyEmpty= $("historyEmpty");
+  var historyClear= $("historyClearBtn");
+
+  function safeGet(key) {
+    try { return window.localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function safeSet(key, value) {
+    try { window.localStorage.setItem(key, value); return true; } catch (e) { return false; }
+  }
+  function safeRemove(key) {
+    try { window.localStorage.removeItem(key); } catch (e) {}
+  }
+
+  function loadHistory() {
+    var raw = safeGet(HISTORY_KEY);
+    if (!raw) return [];
+    try {
+      var arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) { return []; }
+  }
+
+  function saveHistory(arr) {
+    safeSet(HISTORY_KEY, JSON.stringify(arr.slice(0, 10)));
+  }
+
+  function formatWhen(ts) {
+    var d = new Date(ts);
+    var now = new Date();
+    var diff = (now - d) / 1000;
+    if (diff < 60) return "just now";
+    if (diff < 3600) return Math.floor(diff / 60) + "m ago";
+    if (diff < 86400) return Math.floor(diff / 3600) + "h ago";
+    return d.toLocaleDateString();
+  }
+
+  function renderHistory() {
+    var arr = loadHistory();
+    if (!arr.length) {
+      historyList.innerHTML = "";
+      historyEmpty.hidden = false;
+      return;
+    }
+    historyEmpty.hidden = true;
+    historyList.innerHTML = arr.map(function (item, i) {
+      return '<li class="history-item">' +
+        '<span class="when">' + formatWhen(item.ts) + '</span>' +
+        '<span class="pw" title="Click to reveal" data-reveal="' + i + '">' + maskPassword(item.pw) + '</span>' +
+        '<button type="button" class="icon-btn" data-copy="' + i + '" aria-label="Copy">' + COPY_ICON + '</button>' +
+      '</li>';
+    }).join("");
+  }
+
+  function maskPassword(pw) {
+    if (pw.length <= 6) return "••••••";
+    return pw.slice(0, 2) + "•".repeat(Math.min(pw.length - 4, 14)) + pw.slice(-2);
+  }
+
+  function recordHistory(pw) {
+    if (!optHistory.checked) return;
+    var arr = loadHistory();
+    arr = arr.filter(function (item) { return item.pw !== pw; });
+    arr.unshift({ pw: pw, ts: Date.now() });
+    saveHistory(arr);
+    renderHistory();
+  }
+
+  optHistory.addEventListener("change", function () {
+    if (optHistory.checked) {
+      safeSet("spg_history_on", "1");
+      historyBody.hidden = false;
+      renderHistory();
+    } else {
+      safeRemove("spg_history_on");
+      historyBody.hidden = true;
+    }
+  });
+
+  historyList.addEventListener("click", function (e) {
+    var copyBtnEl = e.target.closest("[data-copy]");
+    if (copyBtnEl) {
+      var i = Number(copyBtnEl.getAttribute("data-copy"));
+      var arr = loadHistory();
+      if (arr[i]) {
+        writeClipboard(arr[i].pw).then(function () {
+          copyBtnEl.style.color = "var(--strong)";
+          copyBtnEl.style.borderColor = "var(--strong)";
+          setTimeout(function () {
+            copyBtnEl.style.color = "";
+            copyBtnEl.style.borderColor = "";
+          }, 1200);
+        });
+      }
+      return;
+    }
+    var revealEl = e.target.closest("[data-reveal]");
+    if (revealEl) {
+      var j = Number(revealEl.getAttribute("data-reveal"));
+      var hist = loadHistory();
+      if (hist[j]) {
+        if (revealEl.dataset.shown === "1") {
+          revealEl.textContent = maskPassword(hist[j].pw);
+          revealEl.dataset.shown = "0";
+          revealEl.title = "Click to reveal";
+        } else {
+          revealEl.textContent = hist[j].pw;
+          revealEl.dataset.shown = "1";
+          revealEl.title = "Click to hide";
+        }
+      }
+    }
+  });
+
+  historyClear.addEventListener("click", function () {
+    safeRemove(HISTORY_KEY);
+    renderHistory();
+  });
+
+  // restore opt-in state
+  if (safeGet("spg_history_on") === "1") {
+    optHistory.checked = true;
+    historyBody.hidden = false;
+    renderHistory();
+  }
+
+  /* ============================================================
      Scroll reveals
      ============================================================ */
   var revealEls = document.querySelectorAll(".reveal");
@@ -1058,8 +2340,6 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
   if (reduceMotion || !("IntersectionObserver" in window)) {
     for (var r = 0; r < revealEls.length; r++) revealEls[r].classList.add("is-in");
   } else {
-    // Wait two frames so the initial hidden state is painted before observing —
-    // guarantees the CSS transition actually plays.
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         var io = new IntersectionObserver(function (entries) {
@@ -1069,12 +2349,17 @@ input[type="range"]:focus-visible{outline:2px solid var(--brass-bright);outline-
               io.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.12, rootMargin: "0px 0px -4% 0px" });
+        }, { threshold: 0.08, rootMargin: "0px 0px -4% 0px" });
 
         for (var i = 0; i < revealEls.length; i++) io.observe(revealEls[i]);
       });
     });
   }
+
+  /* ============================================================
+     Init
+     ============================================================ */
+  refreshPassword();
 
 })();
 </script>
